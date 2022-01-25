@@ -1,4 +1,4 @@
-package model.mapper;
+package model.dao.mapper;
 
 import model.entity.Car;
 import model.entity.enums.Status;

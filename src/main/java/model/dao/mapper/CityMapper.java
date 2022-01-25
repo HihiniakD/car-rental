@@ -1,4 +1,4 @@
-package model.mapper;
+package model.dao.mapper;
 
 import model.entity.City;
 
