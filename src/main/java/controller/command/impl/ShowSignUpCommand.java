@@ -9,6 +9,6 @@ import java.io.IOException;
 public class ShowSignUpCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        return null;
+        return "WEB-INF/views/signup.jsp";
     }
 }

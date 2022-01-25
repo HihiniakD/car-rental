@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Log In</title>
+    <title>Sign Up</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 </head>
 
@@ -19,7 +19,7 @@
                 </div>
                 <div class="card shadow-lg">
                     <div class="card-body p-5">
-                        <h1 class="fs-4 card-title fw-bold mb-4">Login</h1>
+                        <h1 class="fs-4 card-title fw-bold mb-4">Sign Up</h1>
                         <form method="POST">
                             <div class="mb-3">
                                 <label class="mb-2 text-muted" for="email">E-Mail Address</label>
@@ -31,19 +31,24 @@
                                 </div>
                                 <input id="password" type="password" class="form-control" name="password" required>
                             </div>
-
+                            <div class="mb-3">
+                                <div class="mb-2 w-100">
+                                    <label class="text-muted" for="password">Full Name</label>
+                                </div>
+                                <input id="name" type="password" class="form-control" name="name" required>
+                            </div>
+                            <div class="mb-3">
+                                <div class="mb-2 w-100">
+                                    <label class="text-muted" for="password">Phone Number</label>
+                                </div>
+                                <input id="phone" type="password" class="form-control" name="phone" required>
+                            </div>
                             <div class="d-flex align-items-center">
-
                                 <button type="submit" class="btn btn-success ms-auto">
-                                    Login
+                                    Sign Up
                                 </button>
                             </div>
                         </form>
-                    </div>
-                    <div class="card-footer py-3 border-0">
-                        <div class="text-center">
-                            Don't have an account? <a href="/sign-up" class="text-dark">Create One</a>
-                        </div>
                     </div>
                 </div>
                 <div class="text-center mt-5 text-muted">
@@ -57,3 +62,4 @@
 <script src="js/login.js"></script>
 </body>
 </html>
+
