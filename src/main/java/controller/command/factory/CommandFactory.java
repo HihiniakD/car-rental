@@ -19,10 +19,8 @@ public class CommandFactory {
     }
 
     public static Command getCommand(String url){
+        // Поменять логику в плане синтаксиса ниже
         Command command = commands.getOrDefault(url, (r,response) -> "index.jsp");
-        if (command == null){
-            return new ErrorCommand();
-        }
         return command;
     }
 

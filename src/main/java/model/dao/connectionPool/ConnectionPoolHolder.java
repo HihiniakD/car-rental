@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 public class ConnectionPoolHolder {
     private static ConnectionPoolHolder instance;
     private static volatile DataSource dataSource;
-    static Logger log = Logger.getLogger(ConnectionPoolHolder.class.getName());
+    private static Logger log = Logger.getLogger(ConnectionPoolHolder.class.getName());
 
     private ConnectionPoolHolder() { getDataSource(); }
 
@@ -28,7 +28,7 @@ public class ConnectionPoolHolder {
 
     public static DataSource getDataSource(){
         try {
-            Class.forName("org.postgresql.Driver").newInstance();
+            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
         } catch (InstantiationException | IllegalAccessException e) {
             log.log(Level.INFO, "can't access");
         } catch (ClassNotFoundException e) {
@@ -38,9 +38,9 @@ public class ConnectionPoolHolder {
             synchronized (ConnectionPoolHolder.class) {
                 if (dataSource == null) {
                     BasicDataSource basicDataSource = new BasicDataSource();
-                    basicDataSource.setUrl("jdbc:postgresql://localhost:5432/car_rental");
-                    basicDataSource.setUsername("postgres");
-                    basicDataSource.setPassword("postgres");
+                    basicDataSource.setUrl("jdbc:mysql://localhost:3306/CarRental");
+                    basicDataSource.setUsername("root");
+                    basicDataSource.setPassword("carRental55$");
                     basicDataSource.setMinIdle(15);
                     basicDataSource.setMaxIdle(50);
                     basicDataSource.setMaxOpenPreparedStatements(100);
