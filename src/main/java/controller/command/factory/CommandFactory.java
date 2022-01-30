@@ -1,10 +1,7 @@
 package controller.command.factory;
 
 import controller.command.Command;
-import controller.command.impl.ErrorCommand;
-import controller.command.impl.SearchCarsCommand;
-import controller.command.impl.ShowLoginCommand;
-import controller.command.impl.ShowSignUpCommand;
+import controller.command.impl.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,9 +10,12 @@ public class CommandFactory {
     private static Map<String, Command> commands = new HashMap<>();
 
     static {
+        commands.put("login", new LoginCommand());
+        commands.put("process_login", new ProcessLoginCommand());
+        commands.put("sign_up", new SignUpCommand());
+        commands.put("process_sign_up", new ProcessSignUpCommand());
         commands.put("search_cars", new SearchCarsCommand());
-        commands.put("show_login", new ShowLoginCommand());
-        commands.put("show_sign_up", new ShowSignUpCommand());
+        commands.put("car_info", new CarInfoCommand());
     }
 
     public static Command getCommand(String url){

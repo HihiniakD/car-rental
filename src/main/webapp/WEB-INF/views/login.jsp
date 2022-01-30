@@ -1,10 +1,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="controller.Path" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<fmt:setLocale value="${requestScope.lang}"/>
+<fmt:setBundle basename="messages"/>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Log In</title>
+    <title><fmt:message key="login"/></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 </head>
 
@@ -19,15 +25,20 @@
                 </div>
                 <div class="card shadow-lg">
                     <div class="card-body p-5">
-                        <h1 class="fs-4 card-title fw-bold mb-4">Login</h1>
-                        <form method="POST">
+                        <h1 class="fs-4 card-title fw-bold mb-4"><fmt:message key="login"/></h1>
+                        <c:choose>
+                            <c:when test="${requestScope.error != null}">
+                                <div style="text-align: center;"><p class="text-danger fw-bold"><fmt:message key="${requestScope.error}"/></p></div>
+                            </c:when>
+                        </c:choose>
+                        <form method="POST" action="${Path.PROCESS_LOGIN_PATH}">
                             <div class="mb-3">
-                                <label class="mb-2 text-muted" for="email">E-Mail Address</label>
-                                <input id="email" type="email" class="form-control" name="email" value="" required autofocus>
+                                <label class="mb-2 text-muted" for="email"><fmt:message key="email"/></label>
+                                <input id="email" type="email" class="form-control" name="email" value="" required>
                             </div>
                             <div class="mb-3">
                                 <div class="mb-2 w-100">
-                                    <label class="text-muted" for="password">Password</label>
+                                    <label class="text-muted" for="password"><fmt:message key="password"/></label>
                                 </div>
                                 <input id="password" type="password" class="form-control" name="password" required>
                             </div>
@@ -35,25 +46,24 @@
                             <div class="d-flex align-items-center">
 
                                 <button type="submit" class="btn btn-success ms-auto">
-                                    Login
+                                    <fmt:message key="login"/>
                                 </button>
                             </div>
                         </form>
                     </div>
                     <div class="card-footer py-3 border-0">
                         <div class="text-center">
-                            Don't have an account? <a href="/sign-up" class="text-dark">Create One</a>
+                            <fmt:message key="donthave"/> <a href="${Path.SIGNUP_PATH}" class="text-dark"><fmt:message key="createone"/></a>
                         </div>
                     </div>
                 </div>
                 <div class="text-center mt-5 text-muted">
-                    Copyright &copy; 2022 &mdash; Rental Car
+                    <fmt:message key="copyright"/>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<script src="js/login.js"></script>
 </body>
 </html>

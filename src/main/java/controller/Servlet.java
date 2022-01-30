@@ -4,10 +4,11 @@ import controller.command.Command;
 import controller.command.factory.CommandFactory;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 
-
+@WebServlet(value = "/")
 public class Servlet extends HttpServlet {
 
     @Override
@@ -23,14 +24,12 @@ public class Servlet extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String path = request.getRequestURI();
-        System.out.println(path);
         path = path.replaceAll(".*/", "");
         Command command = CommandFactory.getCommand(path);
         String page = command.execute(request, response);
         if(page.contains("redirect")){
             response.sendRedirect(request.getContextPath() + page.replace("redirect", "/"));
         } else {
-            System.out.println(page);
             request.getRequestDispatcher(page).forward(request, response);
         }
     }

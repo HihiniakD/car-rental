@@ -1,18 +1,76 @@
 package model.service.impl;
 
+import controller.security.Security;
+import model.dao.UserDao;
+import model.dao.impl.factory.JDBCDaoFactory;
 import model.entity.User;
+import model.exception.ServiceException;
 import model.service.UserService;
 
 import java.util.Optional;
 
+import static controller.Constants.*;
+
+
 public class UserServiceImpl implements UserService {
+
+    UserDao userDao = JDBCDaoFactory.getInstance().createUserDao();
+
     @Override
-    public Boolean signUpUser(String name, String password, String email, String phone) {
-        return null;
+    public Optional<User> signUpUser(String name, String password, String email, String phone) throws ServiceException{
+        validateSignUpParams(name, password, email, phone);
+        String hashPassword = Security.hashPassword(password);
+        User user = new User();
+        user.setName(name);
+        user.setEmail(email);
+        user.setPassword(hashPassword);
+        user.setPhone(phone);
+        user.setRoleId(1);
+        userDao.create(user);
+        return Optional.ofNullable(userDao.findUserByEmail(email));
     }
 
     @Override
-    public Optional<User> loginUser(String email) {
-        return Optional.empty();
+    public User loginUser(String email, String password) throws ServiceException{
+        validateLoginParams(email, password);
+        User user = userDao.findUserByEmail(email);
+
+        if (user == null)
+            throw new ServiceException(USER_NOT_FOUND);
+
+        try {
+            if (!Security.isPasswordCorrect(password, user.getPassword()))
+                throw new ServiceException(WRONG_PASSWORD);
+        } catch (Exception e) {
+            throw new ServiceException(WRONG_PASSWORD);
+        }
+        return user;
+
     }
+
+    private void validateSignUpParams(String name, String password, String email, String phone) throws ServiceException{
+        if (!Security.isEmailValid(email))
+            throw new ServiceException(EMAIL_NOT_VALID);
+
+        if (!Security.isPasswordValid(password))
+            throw new ServiceException(PASSWORD_NOT_VALID);
+
+        if (name == null || name.isBlank())
+            throw new ServiceException(NAME_NOT_VALID);
+
+        if (!Security.isPhoneValid(phone))
+            throw new ServiceException(PHONE_NOT_VALID);
+
+        if (userDao.findUserByEmail(email) != null)
+            throw new ServiceException(EMAIL_EXISTS);
+    }
+
+    private void validateLoginParams(String email, String password) throws ServiceException{
+        if (!Security.isEmailValid(email))
+            throw new ServiceException(EMAIL_NOT_VALID);
+
+        if (!Security.isPasswordValid(password))
+            throw new ServiceException(PASSWORD_NOT_VALID);
+    }
+
 }
