@@ -1,9 +1,6 @@
 package model.dao.factory;
 
-import model.dao.CarDao;
-import model.dao.CityDao;
-import model.dao.OrderDao;
-import model.dao.UserDao;
+import model.dao.*;
 import model.dao.impl.factory.JDBCDaoFactory;
 
 public abstract class DaoFactory {
@@ -13,6 +10,8 @@ public abstract class DaoFactory {
     public abstract CarDao createCarDao();
     public abstract OrderDao createOrderDao();
     public abstract CityDao createCityDao();
+    public abstract BrandDao createBrandDao();
+    public abstract CategoryDao createCategoryDao();
 
     public static DaoFactory getInstance(){
         if (daoFactory == null){

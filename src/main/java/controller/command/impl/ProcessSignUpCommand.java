@@ -1,6 +1,7 @@
 package controller.command.impl;
 
 import controller.command.Command;
+import controller.utils.RequestUtils;
 import model.entity.User;
 import model.entity.enums.Role;
 import model.exception.HashException;
@@ -15,7 +16,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 import static controller.Constants.*;
-import static controller.Path.SIGNUP_VIEW;
+import static controller.Path.*;
 
 
 public class ProcessSignUpCommand implements Command {
@@ -24,6 +25,12 @@ public class ProcessSignUpCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        if (RequestUtils.getSessionAttribute(request, USER_PARAMETER, User.class) != null) {
+            // if we somehow opened /login page while being already logged in, we just do redirect to catalog (/)
+            return REDIRECT;
+        }
+
         String email = request.getParameter(EMAIL_PARAMETER).toLowerCase().trim();
         String password = request.getParameter(PASSWORD_PARAMETER);
         String name = request.getParameter(NAME_PARAMETER);
@@ -46,11 +53,11 @@ public class ProcessSignUpCommand implements Command {
             session.setAttribute(USER_PARAMETER, user.get());
             session.setMaxInactiveInterval(86400);
             if (Role.ADMIN.getRole() == user.get().getRoleId()) {
-                return "redirect" + "admin_page";
+                return REDIRECT + "admin_page";
             }
-            return "WEB-INF/views/infoView.jsp";
+            return REDIRECT;
         }
-        return "WEB-INF/views/error.jsp";
+        return NOT_FOUND_VIEW;
         }
 
 

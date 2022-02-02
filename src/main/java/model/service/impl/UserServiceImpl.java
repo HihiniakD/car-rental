@@ -4,6 +4,7 @@ import controller.security.Security;
 import model.dao.UserDao;
 import model.dao.impl.factory.JDBCDaoFactory;
 import model.entity.User;
+import model.entity.enums.Role;
 import model.exception.ServiceException;
 import model.service.UserService;
 
@@ -14,7 +15,7 @@ import static controller.Constants.*;
 
 public class UserServiceImpl implements UserService {
 
-    UserDao userDao = JDBCDaoFactory.getInstance().createUserDao();
+     private UserDao userDao = JDBCDaoFactory.getInstance().createUserDao();
 
     @Override
     public Optional<User> signUpUser(String name, String password, String email, String phone) throws ServiceException{
@@ -25,7 +26,8 @@ public class UserServiceImpl implements UserService {
         user.setEmail(email);
         user.setPassword(hashPassword);
         user.setPhone(phone);
-        user.setRoleId(1);
+        user.setRoleId(Role.USER.getRole());
+        user.setBlocked(false);
         userDao.create(user);
         return Optional.ofNullable(userDao.findUserByEmail(email));
     }
@@ -38,12 +40,17 @@ public class UserServiceImpl implements UserService {
         if (user == null)
             throw new ServiceException(USER_NOT_FOUND);
 
+        //ПЕРЕПИСАТЬ
         try {
             if (!Security.isPasswordCorrect(password, user.getPassword()))
                 throw new ServiceException(WRONG_PASSWORD);
         } catch (Exception e) {
             throw new ServiceException(WRONG_PASSWORD);
         }
+
+        if (user.isBlocked())
+            throw new ServiceException(USER_BLOCKED);
+
         return user;
 
     }

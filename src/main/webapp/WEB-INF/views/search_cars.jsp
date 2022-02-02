@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <fmt:setLocale value="${requestScope.lang}"/>
 <fmt:setBundle basename="messages"/>
 
@@ -10,7 +11,16 @@
 </head>
 <body>
 <jsp:include page="parts/_header.jsp"></jsp:include>
-<h1>ALL CARS WILL BE HERE</h1>
+<div class="album py-5 bg-light">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            <c:forEach items="${requestScope.cars}" var="car">
+            <%@include file="/WEB-INF/jspf/car-card.jspf" %>
+            </c:forEach>
+        </div>
+    </div>
+</div>
+
 
 </body>
 </html>

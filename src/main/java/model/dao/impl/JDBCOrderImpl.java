@@ -5,6 +5,7 @@ import model.entity.Order;
 import model.entity.User;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 public class JDBCOrderImpl implements OrderDao {
@@ -25,7 +26,12 @@ public class JDBCOrderImpl implements OrderDao {
 
     @Override
     public void close(Connection connection) {
-
+        try {
+            connection.close();
+        } catch (SQLException throwables) {
+            //logger
+            throw new RuntimeException(throwables);
+        }
     }
 
     @Override

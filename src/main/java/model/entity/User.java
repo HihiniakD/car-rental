@@ -7,16 +7,18 @@ public class User {
     private String email;
     private String phone;
     private int roleId;
+    private boolean blocked;
 
     public User() {}
 
-    public User(int id, String name, String password, String email, String phone, int roleId) {
+    public User(int id, String name, String password, String email, String phone, int roleId, boolean blocked) {
         this.id = id;
         this.name = name;
         this.password = password;
         this.email = email;
         this.phone = phone;
         this.roleId = roleId;
+        this.blocked = blocked;
     }
 
     public int getId() {
@@ -67,15 +69,24 @@ public class User {
         this.roleId = roleId;
     }
 
+    public boolean isBlocked() {
+        return blocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        this.blocked = blocked;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", password=" + password +
+                ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
-                ", role=" + roleId +
+                ", roleId=" + roleId +
+                ", blocked=" + blocked +
                 '}';
     }
 }

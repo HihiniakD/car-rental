@@ -16,8 +16,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@WebFilter(filterName = "AccessFilter", urlPatterns = "/*", initParams = {@WebInitParam(name = "guest_urls", value = "/,/login,/process_login,/sign_up," +
-        "/process_sign_up,/search_cars"), @WebInitParam(name = "user_urls", value = "/book,/confirm_booking,/my_orders,/cancel_order,/log_out\""),
+@WebFilter(filterName = "AccessFilter", urlPatterns = "/*", initParams = {@WebInitParam(name = "guest_urls", value =
+        "/,/login,/process_login,/sign_up,/search_cars,/process_sign_up,/search_cars"),
+        @WebInitParam(name = "user_urls", value = "/log_out,/info,/search_cars/book_car," +
+                "/search_cars/book_car/confirm_booking,/cancel_order"),
         @WebInitParam(name = "admin_urls", value = "/admin_page,/add_car,/car_list,/search_by_user")})
 public class AccessFilter implements Filter {
 
@@ -46,12 +48,17 @@ public class AccessFilter implements Filter {
         final HttpServletRequest request = (HttpServletRequest) servletRequest;
         final HttpServletResponse response = (HttpServletResponse) servletResponse;
         final HttpSession session = request.getSession(false);
+        System.out.println(request.getRequestURI());
+        System.out.println(guestUrls.contains(request.getRequestURI()) + " IF CONTAINS");
 
         if (guestUrls.contains(request.getRequestURI())){
             filterChain.doFilter(request, response);
             return;
         }
-        //мб убрать второе условие после &&
+        if (userUrls.contains(request.getRequestURI()) && session.getAttribute(USER_ATTRIBUTE) == null){
+            response.sendRedirect(Path.LOGIN_PATH);
+            return;
+        }
         if (session != null && session.getAttribute(USER_ATTRIBUTE) != null){
             User user = (User) session.getAttribute(USER_ATTRIBUTE);
             if (Role.ADMIN.getRole() == user.getRoleId()){
@@ -66,6 +73,7 @@ public class AccessFilter implements Filter {
                 }
             }
         }
+        System.out.println(session.getAttribute(USER_ATTRIBUTE) + " USER ATTRIBUTE ACCESS");
         request.getRequestDispatcher(Path.NOT_FOUND_VIEW).forward(request, response);
     }
 

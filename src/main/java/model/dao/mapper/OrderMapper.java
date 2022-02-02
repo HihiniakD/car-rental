@@ -9,6 +9,9 @@ import java.time.LocalDate;
 
 public class OrderMapper {
     public static Order map(ResultSet resultSet) throws SQLException {
+
+        //TODO сделать константы
+
         Order order = new Order();
         order.setId(resultSet.getInt("id"));
         order.setUserId(resultSet.getInt("user_id"));
@@ -17,7 +20,7 @@ public class OrderMapper {
         order.setPickupDate((LocalDate) resultSet.getObject("pickup_date"));
         order.setDropoffDate((LocalDate) resultSet.getObject("dropoff_date"));
         order.setTotalPrice(resultSet.getInt("total_price"));
-        order.setStatus((Status) resultSet.getObject("status"));
+        order.setStatus((Status.valueOf(resultSet.getString("status").toUpperCase())));
 
         return order;
 

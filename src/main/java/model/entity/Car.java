@@ -5,26 +5,28 @@ import model.entity.enums.Transmission;
 
 public class Car {
     private int id;
+    private int brandId;
     private String model;
     private int passengers;
     private int price;
-    private Status status;
+    private Status statusId;
     private Transmission transmission;
-    private String category;
     private int cityId;
+    private int categoryId;
     private String imageUrl;
 
     public Car(){}
 
-    public Car(int id, String model, int passengers, int price, Status status, Transmission transmission, String category, int city_id, String imageUrl) {
+    public Car(int id, int brandId, String model, int passengers, int price, Status statusId, Transmission transmission, int cityId, int categoryId, String imageUrl) {
         this.id = id;
+        this.brandId = brandId;
         this.model = model;
         this.passengers = passengers;
         this.price = price;
-        this.status = status;
+        this.statusId = statusId;
         this.transmission = transmission;
-        this.category = category;
-        this.cityId = city_id;
+        this.cityId = cityId;
+        this.categoryId = categoryId;
         this.imageUrl = imageUrl;
     }
 
@@ -34,6 +36,14 @@ public class Car {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getBrandId() {
+        return brandId;
+    }
+
+    public void setBrandId(int brandId) {
+        this.brandId = brandId;
     }
 
     public String getModel() {
@@ -60,12 +70,12 @@ public class Car {
         this.price = price;
     }
 
-    public Status getStatus() {
-        return status;
+    public Status getStatusId() {
+        return statusId;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public void setStatusId(Status statusId) {
+        this.statusId = statusId;
     }
 
     public Transmission getTransmission() {
@@ -76,20 +86,20 @@ public class Car {
         this.transmission = transmission;
     }
 
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
     public int getCityId() {
         return cityId;
     }
 
     public void setCityId(int cityId) {
         this.cityId = cityId;
+    }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
 
     public String getImageUrl() {
@@ -104,14 +114,15 @@ public class Car {
     public String toString() {
         return "Car{" +
                 "id=" + id +
+                ", brandId=" + brandId +
                 ", model='" + model + '\'' +
                 ", passengers=" + passengers +
                 ", price=" + price +
-                ", status=" + status +
+                ", statusId=" + statusId +
                 ", transmission=" + transmission +
-                ", category='" + category + '\'' +
-                ", city_id=" + cityId +
-                ", image_url='" + imageUrl + '\'' +
+                ", cityId=" + cityId +
+                ", categoryId=" + categoryId +
+                ", imageUrl='" + imageUrl + '\'' +
                 '}';
     }
 }

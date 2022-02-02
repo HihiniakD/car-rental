@@ -1,14 +1,8 @@
 package model.dao.impl.factory;
 
-import model.dao.CarDao;
-import model.dao.CityDao;
-import model.dao.OrderDao;
-import model.dao.UserDao;
+import model.dao.*;
 import model.dao.factory.DaoFactory;
-import model.dao.impl.JDBCCarImpl;
-import model.dao.impl.JDBCCityImpl;
-import model.dao.impl.JDBCOrderImpl;
-import model.dao.impl.JDBCUserImpl;
+import model.dao.impl.*;
 
 public class JDBCDaoFactory extends DaoFactory {
     @Override
@@ -22,4 +16,10 @@ public class JDBCDaoFactory extends DaoFactory {
 
     @Override
     public CityDao createCityDao() {return new JDBCCityImpl();}
+
+    @Override
+    public BrandDao createBrandDao() {return new JDBCBrandImpl();}
+
+    @Override
+    public CategoryDao createCategoryDao() {return new JDBCCategoryImpl();}
 }

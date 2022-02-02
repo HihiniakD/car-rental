@@ -1,11 +1,7 @@
 package model.service.factory;
 
-import model.service.CarService;
-import model.service.OrderService;
-import model.service.UserService;
-import model.service.impl.CarServiceImpl;
-import model.service.impl.OrderServiceImpl;
-import model.service.impl.UserServiceImpl;
+import model.service.*;
+import model.service.impl.*;
 
 public class ServiceFactory {
     private ServiceFactory(){}
@@ -21,4 +17,10 @@ public class ServiceFactory {
     public static CarService getCarService() {
         return new CarServiceImpl();
     }
+
+    public static CityService getCityService() { return new CityServiceImpl(); }
+
+    public static BrandService getBrandService() { return new BrandServiceImpl(); }
+
+    public static CategoryService getCategoryService() { return new CategoryServiceImpl(); }
 }

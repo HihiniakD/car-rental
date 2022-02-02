@@ -26,8 +26,15 @@
                         <a href="javascript:setLang('en')"><button type="button" class="btn btn-secondary me-2">English version</button></a>
                     </c:otherwise>
                 </c:choose>
-                <button onclick="location.href='${Path.LOGIN_PATH}'"type="button" class="btn btn-success me-2"><fmt:message key="login"/></button>
-                <button onclick="location.href='${Path.SIGNUP_PATH}'" type="button" class="btn btn-warning me-2"><fmt:message key="signup"/></button>
+                <c:choose>
+                    <c:when test="${sessionScope.user == null}">
+                        <button onclick="location.href='${Path.LOGIN_PATH}'"type="button" class="btn btn-success me-2"><fmt:message key="login"/></button>
+                        <button onclick="location.href='${Path.SIGNUP_PATH}'" type="button" class="btn btn-warning me-2"><fmt:message key="signup"/></button>
+                    </c:when>
+                    <c:otherwise>
+                <button onclick="location.href='${Path.LOGOUT_PATH}'"type="button" class="btn btn-success me-2"><fmt:message key="logout"/></button>
+                    </c:otherwise>
+                </c:choose>
             </div>
         </div>
     </div>

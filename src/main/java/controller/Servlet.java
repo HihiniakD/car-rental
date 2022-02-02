@@ -8,6 +8,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 
+import static controller.Constants.*;
+import static controller.Path.*;
+
 @WebServlet(value = "/")
 public class Servlet extends HttpServlet {
 
@@ -27,8 +30,12 @@ public class Servlet extends HttpServlet {
         path = path.replaceAll(".*/", "");
         Command command = CommandFactory.getCommand(path);
         String page = command.execute(request, response);
-        if(page.contains("redirect")){
-            response.sendRedirect(request.getContextPath() + page.replace("redirect", "/"));
+        if (page.contains(BACK_TO_INDEX)){
+            command = CommandFactory.getCommand(EMPTY_COMMAND);
+            page = command.execute(request, response);
+        }
+        if(page.contains(REDIRECT)){
+            response.sendRedirect(request.getContextPath() + page.replace(REDIRECT, MAIN_PATH));
         } else {
             request.getRequestDispatcher(page).forward(request, response);
         }

@@ -13,16 +13,8 @@ import java.util.List;
 
 public class JDBCUserImpl implements UserDao {
 
-    public static final String SQL_CREATE_USER = "INSERT INTO CarRental.user (name, password, email, phone, role_id) VALUES (?,?,?,?,?)";
+    public static final String SQL_CREATE_USER = "INSERT INTO CarRental.user (name, password, email, phone, role_id, blocked) VALUES (?,?,?,?,?,?)";
     public static final String SQL_GET_USER_BY_EMAIL = "SELECT * FROM CarRental.user WHERE email =?";
-
-
-    private static final String FIELD_ID = "id";
-    private static final String FIELD_NAME = "name";
-    private static final String FIELD_EMAIl = "email";
-    private static final String FIELD_PASSWORD = "password";
-    private static final String FIELD_PHONE_NUMBER = "phone";
-    private static final String FIELD_ROLE_ID = "role_id";
 
     @Override
     public boolean create(User entity) {
@@ -33,12 +25,12 @@ public class JDBCUserImpl implements UserDao {
             exception.printStackTrace();
         }
         try (PreparedStatement statement = connection.prepareStatement(SQL_CREATE_USER)){
-            System.out.println("ONO VIPOLNYAETSA");
             statement.setString(1, entity.getName());
             statement.setString(2, entity.getPassword());
             statement.setString(3, entity.getEmail());
             statement.setString(4, entity.getPhone());
             statement.setInt(5, entity.getRoleId());
+            statement.setBoolean(6, entity.isBlocked());
             statement.executeUpdate();
         } catch (SQLException throwable) {
             // logger
@@ -74,6 +66,7 @@ public class JDBCUserImpl implements UserDao {
     @Override
     public User findUserByEmail(String email) {
         Connection connection = null;
+        System.out.println("EMAIL IN JDBC METHOD " +email);
         try {
             connection = ConnectionPoolHolder.getInstance().getConnection();
         }catch (SQLException exception){
@@ -87,7 +80,7 @@ public class JDBCUserImpl implements UserDao {
                     user = UserMapper.map(rs);
             }
         } catch (SQLException throwable) {
-            // logger
+            System.out.println(throwable.getMessage());
         } finally {
             close(connection);
         }
