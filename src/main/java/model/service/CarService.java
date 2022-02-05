@@ -14,6 +14,10 @@ public interface CarService {
                                    String dropOffDate , HttpServletRequest request);
     List<Car> findAllCars();
     Car findCarById(int id);
-
+    boolean carIsAvailable(int id);
     Boolean changeStatus(int id, Status status);
+    List<Car> findAllAvailableCarsSortedByPrice(int cityId, int categoryId, int brandId);
+    List<Car> findAllAvailableCarsSortedByName(int cityId, int categoryId, int brandId);
+
+
 }

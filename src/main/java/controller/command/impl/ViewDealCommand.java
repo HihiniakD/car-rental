@@ -1,6 +1,5 @@
 package controller.command.impl;
 
-import controller.Path;
 import controller.command.Command;
 import model.entity.Car;
 import model.exception.ServiceException;
@@ -9,11 +8,12 @@ import model.service.factory.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import static controller.Constants.*;
 import static controller.Path.*;
 
-public class BookCarCommand implements Command {
+public class ViewDealCommand implements Command {
 
     CarService carService = ServiceFactory.getCarService();
 
@@ -27,7 +27,8 @@ public class BookCarCommand implements Command {
             request.setAttribute(ERROR_PARAMETER, exception.getMessage());
             return REDIRECT;
         }
-        request.setAttribute(CAR_PARAMETER, car);
-        return Path.BOOK_CAR_VIEW;
+        HttpSession session = request.getSession(true);
+        session.setAttribute(CAR_PARAMETER, car);
+        return BOOK_CAR_VIEW;
     }
 }

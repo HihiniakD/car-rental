@@ -37,7 +37,7 @@
                                 <label class="mb-2 text-muted" > <fmt:message key="pickupcity"/></label>
                                 <select name="city" class="form-select">
                                     <c:forEach var="city" items="${cities}">
-                                        <option value="${city.id}">${city.name}</option>
+                                        <option value="${city.id}"><fmt:message key="${city.name}"/></option>
                                     </c:forEach>
                                 </select>
                             </div>
@@ -55,7 +55,7 @@
                                 <label class="mb-2 text-muted" > <fmt:message key="category"/></label>
                                 <select name="category" class="form-select">
                                     <c:forEach var="category" items="${categories}">
-                                        <option value="${category.id}">${category.name}</option>
+                                        <option value="${category.id}"><fmt:message key="${category.name}"/></option>
                                     </c:forEach>
                                 </select>
                             </div>

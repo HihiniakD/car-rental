@@ -11,6 +11,12 @@
 </head>
 <body>
 <jsp:include page="parts/_header.jsp"></jsp:include>
+
+    <div class="text-center bg-light">
+        <button type="button" onclick="location.href='/sortByPrice'" class="btn btn-danger btn-sm">Sort by price</button>
+        <button type="button" onclick="location.href='/sortByName'" class="btn btn-danger btn-sm">Sort by name</button>
+</div>
+
 <div class="album py-5 bg-light">
     <div class="container">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">

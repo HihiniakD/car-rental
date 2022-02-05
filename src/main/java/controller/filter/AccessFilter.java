@@ -15,32 +15,41 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import static controller.Constants.*;
 
 @WebFilter(filterName = "AccessFilter", urlPatterns = "/*", initParams = {@WebInitParam(name = "guest_urls", value =
-        "/,/login,/process_login,/sign_up,/search_cars,/process_sign_up,/search_cars"),
-        @WebInitParam(name = "user_urls", value = "/log_out,/info,/search_cars/book_car," +
-                "/search_cars/book_car/confirm_booking,/cancel_order"),
-        @WebInitParam(name = "admin_urls", value = "/admin_page,/add_car,/car_list,/search_by_user")})
+        "/,/login,/process_login,/sign_up,/search_cars,/process_sign_up,/search_cars,/search_cars/view_deal,/sortByName," +
+                "/sortByPrice"),
+        @WebInitParam(name = "user_urls", value = "/log_out,/my_booking,/info,/search_cars/view_deal," +
+                "/search_cars/view_deal/book,/search_cars/view_deal/book/process_booking"),
+        @WebInitParam(name = "admin_urls", value = "/admin_page,/log_out"),
+        @WebInitParam(name = "manager_urls", value = "/manager_page,/log_out")})
 public class AccessFilter implements Filter {
+
+    public static final String USER_ATTRIBUTE = "user";
+    public static final String GUEST_URLS = "guest_urls";
+    public static final String USER_URLS = "user_urls";
+    public static final String MANAGER_URLS = "manager_urls";
+    public static final String ADMIN_URLS = "admin_urls";
 
     private List<String> guestUrls = new ArrayList<>();
     private List<String> userUrls = new ArrayList<>();
     private List<String> adminUrls = new ArrayList<>();
-    public static final String USER_ATTRIBUTE = "user";
-
+    private List<String> managerUrls = new ArrayList<>();
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        String guestParameter = filterConfig.getInitParameter("guest_urls");
-        String userParameter = filterConfig.getInitParameter("user_urls");
-        String adminParameter = filterConfig.getInitParameter("admin_urls");
+        String guestParameter = filterConfig.getInitParameter(GUEST_URLS);
+        String userParameter = filterConfig.getInitParameter(USER_URLS);
+        String adminParameter = filterConfig.getInitParameter(ADMIN_URLS);
+        String managerParameter = filterConfig.getInitParameter(MANAGER_URLS);
 
         guestUrls = Arrays.stream(guestParameter.split(",")).map(String::trim).collect(Collectors.toList());
         userUrls = Arrays.stream(userParameter.split(",")).map(String::trim).collect(Collectors.toList());
         adminUrls = Arrays.stream(adminParameter.split(",")).map(String::trim).collect(Collectors.toList());
+        managerUrls = Arrays.stream(managerParameter.split(",")).map(String::trim).collect(Collectors.toList());
 
-        System.out.println(guestUrls + "\n" + userUrls + "\n" + adminUrls);
-
+        System.out.println(guestUrls + "\n" + userUrls + "\n" + adminUrls + "\n" + managerUrls);
     }
 
     @Override
@@ -49,32 +58,37 @@ public class AccessFilter implements Filter {
         final HttpServletResponse response = (HttpServletResponse) servletResponse;
         final HttpSession session = request.getSession(false);
         System.out.println(request.getRequestURI());
-        System.out.println(guestUrls.contains(request.getRequestURI()) + " IF CONTAINS");
 
-        if (guestUrls.contains(request.getRequestURI())){
+        if (guestUrls.contains(request.getRequestURI())) {
             filterChain.doFilter(request, response);
             return;
         }
-        if (userUrls.contains(request.getRequestURI()) && session.getAttribute(USER_ATTRIBUTE) == null){
+        if (userUrls.contains(request.getRequestURI()) && session.getAttribute(USER_ATTRIBUTE) == null) {
+            session.setAttribute(ERROR_PARAMETER, MUST_LOGIN);
             response.sendRedirect(Path.LOGIN_PATH);
             return;
         }
-        if (session != null && session.getAttribute(USER_ATTRIBUTE) != null){
+        if (session != null && session.getAttribute(USER_ATTRIBUTE) != null) {
             User user = (User) session.getAttribute(USER_ATTRIBUTE);
-            if (Role.ADMIN.getRole() == user.getRoleId()){
-                if (adminUrls.contains(request.getRequestURI())){
+            if (Role.ADMIN.getRole() == user.getRoleId()) {
+                if (adminUrls.contains(request.getRequestURI())) {
                     filterChain.doFilter(request, response);
                     return;
                 }
             } else if (Role.USER.getRole() == user.getRoleId()) {
-                if (userUrls.contains(request.getRequestURI())){
+                if (userUrls.contains(request.getRequestURI())) {
                     filterChain.doFilter(request, response);
                     return;
                 }
+            } else if (Role.MANAGER.getRole() == user.getRoleId()) {
+                if (managerUrls.contains(request.getRequestURI())) {
+                    filterChain.doFilter(request, response);
+                    return;
+                }
+
             }
+            request.getRequestDispatcher(Path.NOT_FOUND_VIEW).forward(request, response);
         }
-        System.out.println(session.getAttribute(USER_ATTRIBUTE) + " USER ATTRIBUTE ACCESS");
-        request.getRequestDispatcher(Path.NOT_FOUND_VIEW).forward(request, response);
     }
 
     @Override

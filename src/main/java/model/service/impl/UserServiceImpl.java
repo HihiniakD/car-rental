@@ -8,6 +8,7 @@ import model.entity.enums.Role;
 import model.exception.ServiceException;
 import model.service.UserService;
 
+import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 import static controller.Constants.*;
@@ -53,6 +54,20 @@ public class UserServiceImpl implements UserService {
 
         return user;
 
+    }
+
+    @Override
+    public User checkUsernameChange(HttpSession session, String name) {
+        if (name == null || name.isBlank())
+            throw new ServiceException(NAME_NOT_VALID);
+
+        User user = (User) session.getAttribute(USER_PARAMETER);
+        if (!user.getName().equals(name)){
+            userDao.changeUserNameById(user.getId(), name);
+            user.setName(name);
+        }
+
+        return user;
     }
 
     private void validateSignUpParams(String name, String password, String email, String phone) throws ServiceException{

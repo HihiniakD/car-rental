@@ -43,8 +43,6 @@ public class CarServiceImpl implements CarService {
     @Override
     public Car findCarById(int id) {
         Car car = carDao.findById(id);
-        System.out.println(car.getStatusId().getStatus() + "car.getStatusId().getStatus()");
-        System.out.println(Status.BUSY.getStatus() + "Status.BUSY.getStatus()");
         if (car.getStatusId().getStatus() == Status.BUSY.getStatus())
             throw new ServiceException(CAR_NOT_AVAILABLE_ERROR);
 
@@ -52,7 +50,25 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
+    public boolean carIsAvailable(int id) {
+        boolean isAvailable = carDao.checkIsAvailable(id);
+        if (!isAvailable)
+            throw new ServiceException(CAR_NOT_AVAILABLE_ERROR);
+        return isAvailable;
+    }
+
+    @Override
     public Boolean changeStatus(int id, Status status) {
-        return null;
+        return carDao.changeCarStatus(id, status);
+    }
+
+    @Override
+    public List<Car> findAllAvailableCarsSortedByPrice(int cityId, int categoryId, int brandId) {
+        return carDao.findAllAvailableCarsSortedByPrice(cityId, categoryId, brandId);
+    }
+
+    @Override
+    public List<Car> findAllAvailableCarsSortedByName(int cityId, int categoryId, int brandId) {
+        return carDao.findAllAvailableCarsSortedByName(cityId, categoryId, brandId);
     }
 }

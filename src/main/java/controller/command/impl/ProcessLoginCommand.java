@@ -43,7 +43,11 @@ public class ProcessLoginCommand implements Command {
         session.setMaxInactiveInterval(1800);
 
         if (Role.ADMIN.getRole() == user.getRoleId())
-            return REDIRECT + "admin_page";
-        return REDIRECT;
+            return REDIRECT + ADMIN_PAGE_COMMAND;
+
+        if (Role.MANAGER.getRole() == user.getRoleId())
+            return REDIRECT + MANAGER_PAGE_COMMAND;
+
+        return REDIRECT + MY_BOOKING_COMMAND;
     }
 }

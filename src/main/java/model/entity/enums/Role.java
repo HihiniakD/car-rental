@@ -3,7 +3,8 @@ package model.entity.enums;
 public enum Role {
     GUEST(0),
     USER(1),
-    ADMIN(2);
+    ADMIN(2),
+    MANAGER(3);
 
     private int role;
 

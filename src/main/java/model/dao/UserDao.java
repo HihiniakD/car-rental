@@ -8,4 +8,5 @@ public interface UserDao extends GenericDao<User>{
 
     User findUserByEmail(String email);
     List<User> findAllUsers();
+    boolean changeUserNameById(int id, String name);
 }

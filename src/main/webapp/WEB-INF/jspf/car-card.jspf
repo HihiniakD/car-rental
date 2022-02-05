@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="myTags" prefix="calc" %>
 <%@ page import="controller.Path" %>
-<c:set var="carLink" value="${Path.SEARCH_CARS_PATH += Path.BOOK_CAR_PATH +='?id=' += car.id +='&days=' += days +='&pickupDate=' += pickupDate +='&dropoffDate='+=dropoffDate}"/>
+<c:set var="viewDealLink" value="${Path.SEARCH_CARS_PATH += Path.VIEW_DEAL_PATH +='?id=' += car.id}"/>
 
 <div class="col">
     <div class="card shadow-sm">
@@ -13,7 +13,7 @@
             <p class="card-subtitle mb-2 text-muted"><fmt:message key="priceforndays"/> ${days} <fmt:message key="days"/> <calc:totalPriceTag price="${car.price}" days="${days}"/>$</p>
             <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                    <button onclick="location.href='<c:out value="${carLink}"/>'" type="button" class="btn btn-sm btn-success"><fmt:message key="book"/></button>
+                    <button onclick="location.href='<c:out value="${viewDealLink}"/>'" type="button" class="btn btn-sm btn-success"><fmt:message key="viewDeal"/></button>
                     <button type="button" class="btn btn-sm btn-secondary" disabled><c:out value="${car.transmission}"/></button>
                     <button type="button" class="btn btn-sm btn-secondary" disabled><c:out value="${car.passengers}"/> <fmt:message key="passengers"/></button>
                 </div>

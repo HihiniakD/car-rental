@@ -26,6 +26,10 @@
                 <div class="card shadow-lg">
                     <div class="card-body p-5">
                         <h1 class="fs-4 card-title fw-bold mb-4"><fmt:message key="login"/></h1>
+                        <c:if test="${sessionScope.error != null}">
+                            <div style="text-align: center;"><p class="text-danger fw-bold"><fmt:message key="${sessionScope.error}"/></p></div>
+                            <c:remove var="error" scope="session" />
+                        </c:if>
                         <c:choose>
                             <c:when test="${requestScope.error != null}">
                                 <div style="text-align: center;"><p class="text-danger fw-bold"><fmt:message key="${requestScope.error}"/></p></div>

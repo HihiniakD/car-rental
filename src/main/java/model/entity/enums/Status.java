@@ -3,7 +3,7 @@ package model.entity.enums;
 public enum Status {
     AVAILABLE(1),
     BUSY(2),
-    NEW(3),
+    PROCESSING(3),
     APPROVED(4),
     CANCELED(5),
     DONE(6);

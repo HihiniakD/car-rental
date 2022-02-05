@@ -53,9 +53,10 @@ public class ProcessSignUpCommand implements Command {
             session.setAttribute(USER_PARAMETER, user.get());
             session.setMaxInactiveInterval(86400);
             if (Role.ADMIN.getRole() == user.get().getRoleId()) {
-                return REDIRECT + "admin_page";
+                return REDIRECT + ADMIN_PAGE_COMMAND;
             }
-            return REDIRECT;
+            session.setAttribute(SUCCESS_MESSAGE_PARAMETER, SUCCESS_SIGN_UP_MESSAGE);
+            return REDIRECT + MY_BOOKING_COMMAND;
         }
         return NOT_FOUND_VIEW;
         }

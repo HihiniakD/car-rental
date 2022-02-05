@@ -4,11 +4,15 @@ import model.entity.enums.Status;
 
 import java.time.LocalDate;
 
-public class Order {
+public class OrderExtended {
+
     private int id;
     private int userId;
+    private String userName;
     private int carId;
+    private String carName;
     private int cityId;
+    private String cityName;
     private LocalDate pickupDate;
     private LocalDate dropoffDate;
     private int totalPrice;
@@ -16,13 +20,16 @@ public class Order {
     private boolean withDriver;
     private String comment;
 
-    public Order(){}
+    public OrderExtended(){}
 
-    public Order(int id, int userId, int carId, int cityId, LocalDate pickupDate, LocalDate dropoffDate, int totalPrice, Status statusId, boolean withDriver, String comment) {
+    public OrderExtended(int id, int userId, String userName, int carId, String carName, int cityId, String cityName, LocalDate pickupDate, LocalDate dropoffDate, int totalPrice, Status statusId, boolean withDriver, String comment) {
         this.id = id;
         this.userId = userId;
+        this.userName = userName;
         this.carId = carId;
+        this.carName = carName;
         this.cityId = cityId;
+        this.cityName = cityName;
         this.pickupDate = pickupDate;
         this.dropoffDate = dropoffDate;
         this.totalPrice = totalPrice;
@@ -47,6 +54,14 @@ public class Order {
         this.userId = userId;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     public int getCarId() {
         return carId;
     }
@@ -55,12 +70,28 @@ public class Order {
         this.carId = carId;
     }
 
+    public String getCarName() {
+        return carName;
+    }
+
+    public void setCarName(String carName) {
+        this.carName = carName;
+    }
+
     public int getCityId() {
         return cityId;
     }
 
     public void setCityId(int cityId) {
         this.cityId = cityId;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
     }
 
     public LocalDate getPickupDate() {
@@ -113,11 +144,14 @@ public class Order {
 
     @Override
     public String toString() {
-        return "Order{" +
+        return "OrderExtended{" +
                 "id=" + id +
                 ", userId=" + userId +
+                ", userName='" + userName + '\'' +
                 ", carId=" + carId +
+                ", carName='" + carName + '\'' +
                 ", cityId=" + cityId +
+                ", cityName='" + cityName + '\'' +
                 ", pickupDate=" + pickupDate +
                 ", dropoffDate=" + dropoffDate +
                 ", totalPrice=" + totalPrice +

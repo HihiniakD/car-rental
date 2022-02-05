@@ -15,6 +15,7 @@ public class JDBCUserImpl implements UserDao {
 
     public static final String SQL_CREATE_USER = "INSERT INTO CarRental.user (name, password, email, phone, role_id, blocked) VALUES (?,?,?,?,?,?)";
     public static final String SQL_GET_USER_BY_EMAIL = "SELECT * FROM CarRental.user WHERE email =?";
+    public static final String SQL_CHANGE_USER_NAME_BY_ID = "UPDATE CarRental.user SET name=? WHERE id=?";
 
     @Override
     public boolean create(User entity) {
@@ -91,5 +92,27 @@ public class JDBCUserImpl implements UserDao {
     @Override
     public List<User> findAllUsers() {
         return null;
+    }
+
+    @Override
+    public boolean changeUserNameById(int id, String name) {
+        Connection connection = null;
+        try {
+            connection = ConnectionPoolHolder.getInstance().getConnection();
+        }catch (SQLException exception){
+            exception.printStackTrace();
+        }
+        try (PreparedStatement statement = connection.prepareStatement(SQL_CHANGE_USER_NAME_BY_ID)){
+            statement.setString(1, name);
+            statement.setInt(2, id);
+            statement.executeUpdate();
+        } catch (SQLException throwable) {
+            // logger
+            System.out.println(throwable.getMessage());
+            return false;
+        } finally {
+            close(connection);
+        }
+        return true;
     }
 }

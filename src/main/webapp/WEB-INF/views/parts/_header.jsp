@@ -32,6 +32,7 @@
                         <button onclick="location.href='${Path.SIGNUP_PATH}'" type="button" class="btn btn-warning me-2"><fmt:message key="signup"/></button>
                     </c:when>
                     <c:otherwise>
+                        <button onclick="location.href='${Path.MY_BOOKING_PATH}'"type="button" class="btn btn-light me-2"><fmt:message key="myBooking"/></button>
                 <button onclick="location.href='${Path.LOGOUT_PATH}'"type="button" class="btn btn-success me-2"><fmt:message key="logout"/></button>
                     </c:otherwise>
                 </c:choose>

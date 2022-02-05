@@ -15,6 +15,7 @@ import java.util.List;
 public class JDBCCityImpl implements CityDao {
 
     public static final String SQL_GET_ALL_CITIES = "SELECT * FROM CarRental.city";
+    public static final String SQL_GET_CITY_NAME_BY_ID = "SELECT name FROM CarRental.city where id=?";
 
     @Override
     public boolean create(City entity) {
@@ -62,5 +63,29 @@ public class JDBCCityImpl implements CityDao {
             close(connection);
         }
         return cities;
+    }
+
+    @Override
+    public String getCityNameById(int id) {
+        String cityName = "";
+        Connection connection = null;
+        try {
+            connection = ConnectionPoolHolder.getInstance().getConnection();
+        }catch (SQLException exception){
+            exception.printStackTrace();
+        }
+        try (PreparedStatement statement = connection.prepareStatement(SQL_GET_CITY_NAME_BY_ID)){
+            statement.setInt(1, id);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                cityName = rs.getString(1);
+            }
+        } catch (SQLException throwable) {
+            // logger
+            System.out.println(throwable.getMessage());
+        } finally {
+            close(connection);
+        }
+        return cityName;
     }
 }

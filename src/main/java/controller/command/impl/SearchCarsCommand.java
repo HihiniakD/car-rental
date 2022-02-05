@@ -8,10 +8,10 @@ import model.service.factory.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 import static controller.Path.*;
-
 import static controller.Constants.*;
 
 public class SearchCarsCommand implements Command {
@@ -29,10 +29,13 @@ public class SearchCarsCommand implements Command {
             cars = carService.findAllAvailableCars(cityID, categoryID, brandID, pickUpDate, dropOffDate, request);
         }catch (ServiceException exception){
             request.setAttribute(ERROR_PARAMETER, exception.getMessage());
-            return "to index";
+            return BACK_TO_INDEX;
         }
-        System.out.println("CARS  " + cars);
+        HttpSession session = request.getSession(true);
+        session.setAttribute(BRAND_ID_PARAMETER, brandID);
+        session.setAttribute(CITY_ID_PARAMETER, cityID);
+        session.setAttribute(CATEGORY_ID_PARAMETER, categoryID);
         request.setAttribute(CARS_PARAMETER, cars);
-        return "WEB-INF/views/search_cars.jsp";
+        return SEARCH_CARS_VIEW;
     }
 }
