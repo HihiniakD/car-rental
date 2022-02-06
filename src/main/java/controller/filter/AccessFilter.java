@@ -22,8 +22,9 @@ import static controller.Constants.*;
                 "/sortByPrice"),
         @WebInitParam(name = "user_urls", value = "/log_out,/my_booking,/info,/search_cars/view_deal," +
                 "/search_cars/view_deal/book,/search_cars/view_deal/book/process_booking"),
-        @WebInitParam(name = "admin_urls", value = "/admin_page,/log_out"),
-        @WebInitParam(name = "manager_urls", value = "/manager_page,/log_out")})
+        @WebInitParam(name = "admin_urls", value = "/admin_page,/log_out,/users,/cars,/managers"),
+        @WebInitParam(name = "manager_urls", value = "/manager_page,/log_out,/approveBooking,/declineBooking,/finishBooking," +
+                "/processDeclineBooking,/processFinishBooking")})
 public class AccessFilter implements Filter {
 
     public static final String USER_ATTRIBUTE = "user";

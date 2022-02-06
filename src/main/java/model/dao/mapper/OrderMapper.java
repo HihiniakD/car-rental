@@ -3,6 +3,7 @@ package model.dao.mapper;
 import model.entity.Order;
 import model.entity.enums.Status;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -27,10 +28,12 @@ public class OrderMapper {
         order.setUserId(resultSet.getInt(FIELD_USER_ID));
         order.setCarId(resultSet.getInt(FIELD_CAR_ID));
         order.setCityId(resultSet.getInt(FIELD_CITY_ID));
-        order.setPickupDate((LocalDate) resultSet.getObject(FIELD_PICK_UP_DATE));
-        order.setDropoffDate((LocalDate) resultSet.getObject(FIELD_DROP_OFF_DATE));
+        Date pickUp =  (Date) resultSet.getObject(FIELD_PICK_UP_DATE);
+        order.setPickupDate(pickUp.toLocalDate());
+        Date dropOff =  (Date) resultSet.getObject(FIELD_DROP_OFF_DATE);
+        order.setDropoffDate(dropOff.toLocalDate());
         order.setTotalPrice(resultSet.getInt(FIELD_TOTAL_PRICE));
-        order.setStatusId((Status.valueOf(resultSet.getString(FIELD_STATUS_ID).toUpperCase())));
+        order.setStatusId(Status.geStatus(resultSet.getInt(FIELD_STATUS_ID)));
         order.setWithDriver(resultSet.getBoolean(FIELD_DRIVER));
         order.setComment(resultSet.getString(FIELD_COMMENT));
 

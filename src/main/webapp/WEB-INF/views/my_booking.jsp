@@ -34,6 +34,7 @@
         <table class="table table-striped table-sm table-light">
             <thead>
             <tr>
+                <th scope="col"><fmt:message key="orderId"/></th>
                 <th scope="col"><fmt:message key="carName"/></th>
                 <th scope="col"><fmt:message key="pickupcity"/></th>
                 <th scope="col"><fmt:message key="pickupdate"/></th>
@@ -47,12 +48,13 @@
             <tbody>
             <c:forEach items="${requestScope.orders}" var="order">
                 <tr>
+                    <td>${order.id}</td>
                     <td>${order.carName}</td>
                     <td><fmt:message key="${order.cityName}"/></td>
                     <td>${order.pickupDate}</td>
                     <td>${order.dropoffDate}</td>
                     <td>${order.totalPrice}$</td>
-                    <td><fmt:message key="${order.statusId == 'PROCESSING' ? 'processing':'approved'}"/></td>
+                    <td><fmt:message key="${order.statusId}"/></td>
                     <td><fmt:message key="${order.withDriver}"/></td>
                     <td>${order.comment}</td>
                 </tr>

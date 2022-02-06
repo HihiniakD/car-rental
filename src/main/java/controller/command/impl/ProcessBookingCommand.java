@@ -35,9 +35,8 @@ public class ProcessBookingCommand implements Command {
         long totalPrice = (long) session.getAttribute(TOTAL_PRICE_PARAMETER);
         String pickUpDate = (String) session.getAttribute(PICKUP_DATE_PARAMETER);
         String dropOffDate = (String) session.getAttribute(DROPOFF_DATE_PARAMETER);
-        boolean withDriver = (boolean) session.getAttribute(DRIVER_PARAMETER);
+        boolean withDriver = !(session.getAttribute(DRIVER_PARAMETER) == null);
         User user = null;
-
 
         try {
             user = userService.checkUsernameChange(session, name);

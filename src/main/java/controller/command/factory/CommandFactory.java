@@ -27,6 +27,12 @@ public class CommandFactory {
         commands.put("sortByName", new SortCarsByNameCommand());
         commands.put("manager_page", new ManagerPageCommand());
         commands.put("admin_page", new AdminPageCommand());
+        commands.put("approveBooking", new ApproveBookingCommand());
+        commands.put("declineBooking", new DeclineBookingCommand());
+        commands.put("finishBooking", new FinishBookingCommand());
+        commands.put("processDeclineBooking", new ProccessDeclineBookingCommand());
+        commands.put("processFinishBooking", new ProcessFinishBookingCommand());
+        commands.put("users", new UsersCommand());
     }
 
     public static Command getCommand(String url){

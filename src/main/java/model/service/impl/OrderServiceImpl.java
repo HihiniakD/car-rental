@@ -22,8 +22,47 @@ public class OrderServiceImpl implements OrderService {
     OrderDao orderDao = DaoFactory.getInstance().createOrderDao();
 
     @Override
-    public List<Order> findAll() {
-        return null;
+    public boolean changeOrderStatusById(int orderId, Status status) {
+        return orderDao.changeOrderStatusById(orderId, status);
+    }
+
+    @Override
+    public boolean declineOrder(int id, String comment) {
+        return orderDao.declineOrderAndSetComment(id, comment, Status.CANCELED);
+    }
+
+    @Override
+    public boolean finishOrder(int id, String comment, String penalty) {
+        validatePenaltyFee(penalty);
+        int penaltyFee = Integer.parseInt(penalty);
+        Order order = orderDao.findById(id);
+        int newTotalPrice = order.getTotalPrice() + penaltyFee;
+        return orderDao.finishOrderAndSetStatusAndPrice(id, comment, newTotalPrice, Status.DONE);
+    }
+
+    @Override
+    public Order findOrderById(int orderId) {
+        return orderDao.findById(orderId);
+    }
+
+    @Override
+    public List<OrderExtended> findAllFinishedOrders() {
+        return orderDao.findAllByStatus(Status.DONE);
+    }
+
+    @Override
+    public List<OrderExtended> findAllNewOrders() {
+        return orderDao.findAllByStatus(Status.PROCESSING);
+    }
+
+    @Override
+    public List<OrderExtended> findAllInProgressOrders() {
+        return orderDao.findAllByStatus(Status.APPROVED);
+    }
+
+    @Override
+    public List<OrderExtended> findAllDeclinedOrders() {
+        return orderDao.findAllByStatus(Status.CANCELED);
     }
 
     @Override
@@ -71,4 +110,19 @@ public class OrderServiceImpl implements OrderService {
 
         return true;
     }
+
+    public boolean validatePenaltyFee(String penaltyFee) {
+        if (penaltyFee == null || penaltyFee.isBlank())
+            throw new ServiceException(FAIL_MESSAGE);
+
+        try {
+            Integer.parseInt(penaltyFee);
+        }catch (NumberFormatException exception){
+            throw new ServiceException(FAIL_MESSAGE);
+        }
+
+        return true;
+    }
+
+
 }

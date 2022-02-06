@@ -16,6 +16,7 @@ public class Path {
     public static final String MY_BOOKING_PATH = "/my_booking";
     public static final String MANAGER_PAGE_PATH = "/manager_page";
     public static final String ADMIN_PAGE_PATH = "/admin_page";
+    public static final String DECLINE_ORDER_PATH = "/declineBooking";
 
 
     public static final String NOT_FOUND_VIEW = "/WEB-INF/views/error.jsp";
@@ -29,6 +30,9 @@ public class Path {
     public static final String MY_BOOKING_VIEW = "/WEB-INF/views/my_booking.jsp";
     public static final String MANAGER_PAGE_VIEW = "/WEB-INF/views/manager_page.jsp";
     public static final String ADMIN_PAGE_VIEW = "/WEB-INF/views/admin_page.jsp";
+    public static final String DECLINE_ORDER_VIEW = "/WEB-INF/views/decline_order.jsp";
+    public static final String FINISH_ORDER_VIEW = "/WEB-INF/views/finish_order.jsp";
+    public static final String USERS_VIEW = "/WEB-INF/views/users.jsp";
 
     //redirect commands
     public static final String MY_BOOKING_COMMAND = "my_booking";

@@ -9,6 +9,7 @@ import model.exception.ServiceException;
 import model.service.UserService;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Optional;
 
 import static controller.Constants.*;
@@ -68,6 +69,17 @@ public class UserServiceImpl implements UserService {
         }
 
         return user;
+    }
+
+    @Override
+    public int getNumberOfUsers() {
+        return userDao.getNumberOfUsers();
+    }
+
+    @Override
+    public List<User> findUsersPagination(int currentPage, int rowsPerPage) {
+        int start = currentPage * rowsPerPage - rowsPerPage;
+        return userDao.findUsers(start, rowsPerPage);
     }
 
     private void validateSignUpParams(String name, String password, String email, String phone) throws ServiceException{
