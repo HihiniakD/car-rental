@@ -31,11 +31,6 @@
                     <label class="form-check-label" for="checkBox"><fmt:message key="personalDriver"/></label>
                     <button type="submit" class="btn btn-success"><fmt:message key="goToBook"/></button>
                 </form>
-<%--                <input class="form-check-input" type="checkbox" value="" id="flexCheckIndeterminate">--%>
-<%--                <label class="form-check-label" for="flexCheckIndeterminate">--%>
-<%--                    <fmt:message key="personalDriver"/>--%>
-<%--                </label> <br><br>--%>
-<%--                <button type="button" class="btn btn-primary"><fmt:message key="goToBook"/></button>--%>
             </div>
         </div>
 </div>

@@ -5,11 +5,10 @@
 <%@ taglib uri="myTags" prefix="calc" %>
 <fmt:setBundle basename="messages"/>
 
-
 <html>
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-    <title><fmt:message key="declineRequest"/></title>
+    <title><fmt:message key="editCar"/></title>
 </head>
 <body>
 <jsp:include page="parts/_manager_header.jsp"></jsp:include>
@@ -22,27 +21,30 @@
                 </div>
                 <div class="card shadow-lg">
                     <div class="card-body p-5">
-                        <h1 class="fs-4 card-title fw-bold mb-4"><fmt:message key="declineRequest"/></h1>
-                        <form method="POST" action="/processDeclineBooking">
-                            <div class="mb-3">
-                                <label class="mb-2 text-muted" for="id"><fmt:message key="orderId"/></label>
-                                <input id="id" type="text" class="form-control" name="id" required value="<c:out value="${order.id}"/>" readonly>
-                            </div>
+                        <h1 class="fs-4 card-title fw-bold mb-4"><fmt:message key="editCar"/></h1>
+                        <form method="POST" action="/processEditCar">
                             <div class="mb-3">
                                 <label class="mb-2 text-muted" for="id"><fmt:message key="carId"/></label>
-                                <input id="carId" type="text" class="form-control" name="carId" required value="<c:out value="${order.carId}"/>" readonly>
+                                <input id="id" type="text" class="form-control" name="id" required value="<c:out value="${car.id}"/>" readonly>
                             </div>
                             <div class="mb-3">
                                 <div class="mb-2 w-100">
-                                    <label class="text-muted" for="comment"><fmt:message key="comment"/></label>
+                                    <label class="text-muted" for="price"><fmt:message key="price"/></label>
                                 </div>
-                                <input id="comment" type="text" class="form-control" name="comment" required value="<c:out value="${order.comment}"/>">
+                                <input id="price" type="text" class="form-control" name="price" required value="<c:out value="${car.price}"/>">
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="mb-2 w-100">
+                                    <label class="text-muted" for="url"><fmt:message key="imageURL"/></label>
+                                </div>
+                                <input id="url" type="text" class="form-control" name="url" required value="<c:out value="${car.imageUrl}"/>">
                             </div>
 
                             <div class="d-flex align-items-center">
 
                                 <button type="submit" class="btn btn-success ms-auto">
-                                    <fmt:message key="declineRequest"/>
+                                    <fmt:message key="editCar"/>
                                 </button>
                             </div>
                         </form>

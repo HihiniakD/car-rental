@@ -5,10 +5,9 @@
 <%@ taglib uri="myTags" prefix="calc" %>
 <fmt:setBundle basename="messages"/>
 
-
 <html>
 <head>
-    <title><fmt:message key="users"/></title>
+    <title><fmt:message key="cars"/></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -28,44 +27,46 @@
     </c:if>
 
     <div class="py-3 text-center">
-        <h3><fmt:message key="users"/></h3>
+        <h3><fmt:message key="cars"/></h3>
+        <button onclick="location.href='/addCar'"type="button" class="btn btn-success me-2"><fmt:message key="addCar"/></button>
     </div>
     <div class="table-responsive">
         <table class="table table-striped table-light">
             <thead>
             <tr>
-                <th scope="col"><fmt:message key="userId"/></th>
-                <th scope="col"><fmt:message key="clientFullName"/></th>
-                <th scope="col"><fmt:message key="email"/></th>
-                <th scope="col"><fmt:message key="number"/></th>
-                <th scope="col"><fmt:message key="blocked"/></th>
+                <th scope="col"><fmt:message key="carId"/></th>
+                <th scope="col"><fmt:message key="carName"/></th>
+                <th scope="col"><fmt:message key="Passengers"/></th>
+                <th scope="col"><fmt:message key="price"/></th>
+                <th scope="col"><fmt:message key="Transmission"/></th>
+                <th scope="col"><fmt:message key="status"/></th>
                 <th scope="col"><fmt:message key="actions"/></th>
             </tr>
             </thead>
             <tbody>
-            <c:forEach items="${requestScope.users}" var="user">
+            <c:forEach items="${requestScope.cars}" var="car">
                 <tr>
-                    <td>${user.id}</td>
-                    <td>${user.name}</td>
-                    <td>${user.email}</td>
-                    <td>${user.phone}</td>
-                    <td><fmt:message key="${user.blocked}"/></td>
+                    <td>${car.id}</td>
+                    <td>${car.model}</td>
+                    <td>${car.passengers}</td>
+                    <td>${car.price}$</td>
+                    <td><fmt:message key="${car.transmission}"/></td>
+                    <td><fmt:message key="${car.statusId}"/></td>
                     <td>
-                        <c:choose>
-                            <c:when test="${user.blocked == true}">
-                                <a href="/blocking?id=<c:out value='${user.id}'/>&blocked=<c:out value='${user.blocked}'/>"><fmt:message key="unblockUser"/></a>
-                            </c:when>
-                            <c:otherwise>
-                                <a href="/blocking?id=<c:out value='${user.id}'/>&blocked=<c:out value='${user.blocked}'/>"><fmt:message key="blockUser"/></a>
-                            </c:otherwise>
-                        </c:choose>
+                                <a href="/editCar?id=<c:out value='${car.id}'/>"><fmt:message key="edit"/></a>
+                        &nbsp;&nbsp;&nbsp;
+                                <a href="/deleteCar?id=<c:out value='${car.id}'/>"><fmt:message key="delete"/></a>
                     </td>
                 </tr>
             </c:forEach>
             </tbody>
         </table>
-        <%@ include file="parts/pagination.jsp" %>
     </div>
+
+
+
 </div>
+
+
 </body>
 </html>

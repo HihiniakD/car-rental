@@ -2,7 +2,6 @@ package model.dao;
 
 import model.entity.Order;
 import model.entity.OrderExtended;
-import model.entity.User;
 import model.entity.enums.Status;
 
 import java.util.List;

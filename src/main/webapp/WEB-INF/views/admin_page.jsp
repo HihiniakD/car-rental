@@ -4,7 +4,7 @@
 <fmt:setLocale value="${requestScope.lang}"/>
 <%@ taglib uri="myTags" prefix="calc" %>
 <fmt:setBundle basename="messages"/>
-<%@ page import="controller.Path" %>
+
 <html>
 <head>
     <title><fmt:message key="adminPage"/></title>
@@ -15,9 +15,9 @@
 <div class="container fluid">
     <div class="py-3 text-center">
         <h3><fmt:message key="adminPage"/></h3>
-        <button onclick="location.href='/users'"type="button" class="btn btn-success me-2">USERS</button>
-        <button onclick="location.href='/cars'"type="button" class="btn btn-success me-2">CARS</button>
-        <button onclick="location.href='/add_manager'"type="button" class="btn btn-success me-2">MANAGERS</button>
+        <button onclick="location.href='/users'"type="button" class="btn btn-success me-2"><fmt:message key="users"/></button>
+        <button onclick="location.href='/cars'"type="button" class="btn btn-success me-2"><fmt:message key="cars"/></button>
+        <button onclick="location.href='/managers'"type="button" class="btn btn-success me-2"><fmt:message key="managers"/></button>
     </div>
 
 </div>

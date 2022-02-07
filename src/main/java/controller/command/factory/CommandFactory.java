@@ -2,6 +2,8 @@ package controller.command.factory;
 
 import controller.command.Command;
 import controller.command.impl.*;
+import controller.command.impl.admin.*;
+import controller.command.impl.manager.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,11 +35,19 @@ public class CommandFactory {
         commands.put("processDeclineBooking", new ProccessDeclineBookingCommand());
         commands.put("processFinishBooking", new ProcessFinishBookingCommand());
         commands.put("users", new UsersCommand());
+        commands.put("blocking", new ProcessBlockCommand());
+        commands.put("managers", new ManagersCommand());
+        commands.put("addManager", new AddManagerCommand());
+        commands.put("cars", new CarsCommand());
+        commands.put("processAddManager", new ProcessAddManagerCommand());
+        commands.put("deleteCar", new DeleteCarCommand());
+        commands.put("editCar", new EditCarCommand());
+        commands.put("processEditCar", new ProcessEditCarCommand());
+        commands.put("addCar", new AddCarCommand());
+        commands.put("processAddCar", new ProcessAddCarCommand());
     }
 
     public static Command getCommand(String url){
-        // Поменять логику в плане синтаксиса ниже
-        System.out.println("CURRENT COMMAND -" + url);
         Command command = commands.getOrDefault(url, (r,response) -> INDEX_VIEW);
         return command;
     }

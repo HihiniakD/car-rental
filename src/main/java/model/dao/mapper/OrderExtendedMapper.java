@@ -6,7 +6,6 @@ import model.entity.enums.Status;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 
 public class OrderExtendedMapper {
 
@@ -42,6 +41,7 @@ public class OrderExtendedMapper {
         order.setStatusId(Status.geStatus(resultSet.getInt(FIELD_STATUS_ID)));
         order.setWithDriver(resultSet.getBoolean(FIELD_DRIVER));
         order.setComment(resultSet.getString(FIELD_COMMENT));
+
         return order;
     }
 }

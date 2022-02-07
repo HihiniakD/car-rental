@@ -1,5 +1,7 @@
 package model.entity.enums;
 
+import static controller.Constants.NO_SUCH_INDEX;
+
 public enum Status {
     AVAILABLE(1),
     BUSY(2),
@@ -20,9 +22,8 @@ public enum Status {
 
     public static Status geStatus(int index) {
         for (Status status : Status.values()) {
-            if
-            (status.index == index) return status;
+            if (status.index == index) return status;
         }
-        throw new IllegalArgumentException("No such index");
+        throw new IllegalArgumentException(NO_SUCH_INDEX);
     }
 }

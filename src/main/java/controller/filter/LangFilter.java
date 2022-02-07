@@ -24,7 +24,6 @@ public class LangFilter implements Filter {
             request.setAttribute(LANG_COOKIE_NAME, lang);
         else
             request.setAttribute(LANG_COOKIE_NAME, UK_LANG);
-        System.out.println(request.getAttribute("lang"));
         filterChain.doFilter(request, response);
     }
 

@@ -1,5 +1,6 @@
 package model.service.impl;
 
+import controller.security.Security;
 import model.dao.CarDao;
 import model.dao.factory.DaoFactory;
 import model.entity.Car;
@@ -15,12 +16,23 @@ import java.util.List;
 import static controller.Constants.*;
 
 public class CarServiceImpl implements CarService {
-    CarDao carDao = DaoFactory.getInstance().createCarDao();
 
+    private final CarDao carDao = DaoFactory.getInstance().createCarDao();
 
     @Override
-    public Boolean addCar(String model, int passengers, int price, Status status, Transmission transmission, String category, int cityId, String imageUrl) {
-        return null;
+    public Boolean addCar(int brandId, String model, int passengers, String price, String transmission, int categoryId, int cityId, String imageUrl) {
+        validateAddCar(price, model, imageUrl);
+        Car car = new Car();
+        car.setBrandId(brandId);
+        car.setModel(model);
+        car.setPassengers(passengers);
+        car.setPrice(Integer.parseInt(price));
+        car.setStatusId(Status.AVAILABLE);
+        car.setTransmission(Transmission.valueOf(transmission));
+        car.setCityId(cityId);
+        car.setCategoryId(categoryId);
+        car.setImageUrl(imageUrl);
+        return carDao.create(car);
     }
 
     @Override
@@ -37,7 +49,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public List<Car> findAllCars() {
-        return null;
+        return carDao.findAllCars();
     }
 
     @Override
@@ -70,5 +82,48 @@ public class CarServiceImpl implements CarService {
     @Override
     public List<Car> findAllAvailableCarsSortedByName(int cityId, int categoryId, int brandId) {
         return carDao.findAllAvailableCarsSortedByName(cityId, categoryId, brandId);
+    }
+
+    @Override
+    public boolean deleteCar(int carId) {
+        return carDao.deleteCar(carId);
+    }
+
+    @Override
+    public boolean editCar(int carId, String price, String imageUrl) {
+        validateEditCar(price, imageUrl);
+        int carPrice = Integer.parseInt(price);
+        return carDao.editCar(carId, carPrice, imageUrl);
+    }
+
+    private boolean validateEditCar(String price, String imageUrl) {
+        try{
+            Integer.parseInt(price);
+        }catch (NumberFormatException e){
+            throw new ServiceException(DATA_NOT_VALID);
+        }
+
+        if (!Security.isUrlValid(imageUrl)){
+            throw new ServiceException(DATA_NOT_VALID);
+        }
+
+        return true;
+    }
+
+    private boolean validateAddCar(String price, String model, String imageUrl) {
+        try{
+            Integer.parseInt(price);
+        }catch (NumberFormatException e){
+            throw new ServiceException(DATA_NOT_VALID);
+        }
+
+        if (!Security.isUrlValid(imageUrl)){
+            throw new ServiceException(DATA_NOT_VALID);
+        }
+
+        if (model == null || model.isBlank())
+            throw new ServiceException(DATA_NOT_VALID);
+
+        return true;
     }
 }

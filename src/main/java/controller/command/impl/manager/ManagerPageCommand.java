@@ -1,4 +1,4 @@
-package controller.command.impl;
+package controller.command.impl.manager;
 
 import controller.command.Command;
 import model.entity.OrderExtended;
@@ -15,7 +15,7 @@ import static controller.Constants.*;
 
 public class ManagerPageCommand implements Command {
 
-    OrderService orderService = ServiceFactory.getOrderService();
+    private final OrderService orderService = ServiceFactory.getOrderService();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException {

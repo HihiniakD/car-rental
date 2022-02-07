@@ -3,7 +3,6 @@ package model.dao.impl;
 import model.dao.BrandDao;
 import model.dao.connectionPool.ConnectionPoolHolder;
 import model.dao.mapper.BrandMapper;
-import model.dao.mapper.CityMapper;
 import model.entity.Brand;
 
 import java.sql.Connection;
@@ -24,7 +23,7 @@ public class JDBCBrandImpl implements BrandDao {
         try {
             connection = ConnectionPoolHolder.getInstance().getConnection();
         }catch (SQLException exception){
-            exception.printStackTrace();
+            // logger
         }
         try (PreparedStatement statement = connection.prepareStatement(SQL_GET_ALL_BRANDS)){
             ResultSet rs = statement.executeQuery();
@@ -33,7 +32,6 @@ public class JDBCBrandImpl implements BrandDao {
             }
         } catch (SQLException throwable) {
             // logger
-            System.out.println(throwable.getMessage());
         } finally {
             close(connection);
         }
@@ -43,17 +41,7 @@ public class JDBCBrandImpl implements BrandDao {
     @Override
     public boolean create(Brand entity) {
         return false;
-    }
-
-    @Override
-    public boolean update(Brand entity) {
-        return false;
-    }
-
-    @Override
-    public boolean delete(Brand entity) {
-        return false;
-    }
+    } // TODO
 
     @Override
     public void close(Connection connection) {

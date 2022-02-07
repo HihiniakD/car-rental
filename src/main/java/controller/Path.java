@@ -2,6 +2,7 @@ package controller;
 
 public class Path {
 
+    //paths of commands
     public static final String REDIRECT = "redirect";
     public static final String MAIN_PATH = "/";
     public static final String LOGIN_PATH = "/login";
@@ -18,7 +19,7 @@ public class Path {
     public static final String ADMIN_PAGE_PATH = "/admin_page";
     public static final String DECLINE_ORDER_PATH = "/declineBooking";
 
-
+    //views
     public static final String NOT_FOUND_VIEW = "/WEB-INF/views/error.jsp";
     public static final String SIGNUP_VIEW = "/WEB-INF/views/sign_up.jsp";
     public static final String LOGIN_VIEW = "/WEB-INF/views/login.jsp";
@@ -33,10 +34,18 @@ public class Path {
     public static final String DECLINE_ORDER_VIEW = "/WEB-INF/views/decline_order.jsp";
     public static final String FINISH_ORDER_VIEW = "/WEB-INF/views/finish_order.jsp";
     public static final String USERS_VIEW = "/WEB-INF/views/users.jsp";
+    public static final String MANAGERS_VIEW = "/WEB-INF/views/managers.jsp";
+    public static final String ADD_MANAGER_VIEW = "/WEB-INF/views/add_manager.jsp";
+    public static final String CARS_VIEW = "/WEB-INF/views/cars.jsp";
+    public static final String CAR_EDIT_VIEW = "/WEB-INF/views/edit_car.jsp";
+    public static final String CAR_ADD_VIEW = "/WEB-INF/views/add_car.jsp";
 
     //redirect commands
     public static final String MY_BOOKING_COMMAND = "my_booking";
     public static final String MANAGER_PAGE_COMMAND = "manager_page";
     public static final String ADMIN_PAGE_COMMAND = "admin_page";
+    public static final String USERS_PAGE_COMMAND = "users";
+    public static final String MANAGERS_PAGE_COMMAND = "managers";
+    public static final String CARS_PAGE_COMMAND = "cars";
 
 }

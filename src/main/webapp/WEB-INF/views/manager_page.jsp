@@ -4,7 +4,8 @@
 <fmt:setLocale value="${requestScope.lang}"/>
 <%@ taglib uri="myTags" prefix="calc" %>
 <fmt:setBundle basename="messages"/>
-<%@ page import="controller.Path" %>
+
+
 <html>
 <head>
     <title><fmt:message key="managerPage"/></title>
@@ -192,11 +193,5 @@
     </div>
 
 </div>
-
-
-
-
-
-
 </body>
 </html>

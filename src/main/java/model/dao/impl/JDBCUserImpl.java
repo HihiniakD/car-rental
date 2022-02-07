@@ -17,8 +17,10 @@ public class JDBCUserImpl implements UserDao {
     public static final String SQL_CREATE_USER = "INSERT INTO CarRental.user (name, password, email, phone, role_id, blocked) VALUES (?,?,?,?,?,?)";
     public static final String SQL_GET_USER_BY_EMAIL = "SELECT * FROM CarRental.user WHERE email =?";
     public static final String SQL_CHANGE_USER_NAME_BY_ID = "UPDATE CarRental.user SET name=? WHERE id=?";
-    private static final String SELECT_USERS_COUNT = "SELECT COUNT(id) FROM CarRental.user";
-    private static final String SELECT_USERS_BY_LIMIT = "SELECT * FROM CarRental.user WHERE role_id=1 LIMIT ?,?";
+    private static final String SQL_SELECT_USERS_COUNT = "SELECT COUNT(id) FROM CarRental.user";
+    private static final String SQL_SELECT_USERS_BY_LIMIT = "SELECT * FROM CarRental.user WHERE role_id=1 LIMIT ?,?";
+    private static final String SQL_CHANGE_BLOCKED_STATUS = "UPDATE CarRental.user SET blocked=? WHERE id =?";
+    private static final String SQL_GET_ALL_MANAGERS = "SELECT * FROM CarRental.user where role_id=3";
 
     @Override
     public boolean create(User entity) {
@@ -26,7 +28,7 @@ public class JDBCUserImpl implements UserDao {
         try {
             connection = ConnectionPoolHolder.getInstance().getConnection();
         }catch (SQLException exception){
-            exception.printStackTrace();
+            // logger
         }
         try (PreparedStatement statement = connection.prepareStatement(SQL_CREATE_USER)){
             statement.setString(1, entity.getName());
@@ -38,23 +40,11 @@ public class JDBCUserImpl implements UserDao {
             statement.executeUpdate();
         } catch (SQLException throwable) {
             // logger
-            System.out.println(throwable.getMessage());
             return false;
         } finally {
             close(connection);
         }
         return true;
-
-    }
-
-    @Override
-    public boolean update(User entity) {
-        return false;
-    }
-
-    @Override
-    public boolean delete(User entity) {
-        return false;
     }
 
     @Override
@@ -63,8 +53,28 @@ public class JDBCUserImpl implements UserDao {
             connection.close();
         } catch (SQLException throwables) {
             //logger
-            throw new RuntimeException(throwables);
         }
+    }
+
+    @Override
+    public boolean changeBlockedStatus(int userId, boolean blocked) {
+        Connection connection = null;
+        try {
+            connection = ConnectionPoolHolder.getInstance().getConnection();
+        }catch (SQLException exception){
+            // logger
+        }
+        try (PreparedStatement statement = connection.prepareStatement(SQL_CHANGE_BLOCKED_STATUS)){
+            statement.setBoolean(1, blocked);
+            statement.setInt(2, userId);
+            statement.executeUpdate();
+        } catch (SQLException throwable) {
+            // logger
+            return false;
+        } finally {
+            close(connection);
+        }
+        return true;
     }
 
     @Override
@@ -74,10 +84,9 @@ public class JDBCUserImpl implements UserDao {
         try {
             connection = ConnectionPoolHolder.getInstance().getConnection();
         } catch (SQLException throwables) {
-//            logger.error("no connection", throwables);
-            System.out.println(throwables.getMessage());
+            // logger
         }
-        try(PreparedStatement statement = connection.prepareStatement(SELECT_USERS_COUNT)){
+        try(PreparedStatement statement = connection.prepareStatement(SQL_SELECT_USERS_COUNT)){
             ResultSet rs = statement.executeQuery();
 
             if( rs.next()) {
@@ -85,8 +94,7 @@ public class JDBCUserImpl implements UserDao {
             }
 
         } catch (SQLException ex){
-//            logger.info("Exception" + ex.getMessage());
-            System.out.println(ex.getMessage());
+            // logger
         } finally {
             close(connection);
         }
@@ -96,11 +104,10 @@ public class JDBCUserImpl implements UserDao {
     @Override
     public User findUserByEmail(String email) {
         Connection connection = null;
-        System.out.println("EMAIL IN JDBC METHOD " +email);
         try {
             connection = ConnectionPoolHolder.getInstance().getConnection();
         }catch (SQLException exception){
-            exception.printStackTrace();
+            // logger
         }
         User user = null;
         try (PreparedStatement statement = connection.prepareStatement(SQL_GET_USER_BY_EMAIL)){
@@ -110,17 +117,11 @@ public class JDBCUserImpl implements UserDao {
                     user = UserMapper.map(rs);
             }
         } catch (SQLException throwable) {
-            System.out.println(throwable.getMessage());
+            // logger
         } finally {
             close(connection);
         }
-        System.out.println(user);
         return user;
-    }
-
-    @Override
-    public List<User> findAllUsers() {
-        return null;
     }
 
     @Override
@@ -129,7 +130,7 @@ public class JDBCUserImpl implements UserDao {
         try {
             connection = ConnectionPoolHolder.getInstance().getConnection();
         }catch (SQLException exception){
-            exception.printStackTrace();
+            // logger
         }
         try (PreparedStatement statement = connection.prepareStatement(SQL_CHANGE_USER_NAME_BY_ID)){
             statement.setString(1, name);
@@ -137,7 +138,6 @@ public class JDBCUserImpl implements UserDao {
             statement.executeUpdate();
         } catch (SQLException throwable) {
             // logger
-            System.out.println(throwable.getMessage());
             return false;
         } finally {
             close(connection);
@@ -152,9 +152,9 @@ public class JDBCUserImpl implements UserDao {
         try {
             connection = ConnectionPoolHolder.getInstance().getConnection();
         } catch (SQLException throwables) {
-//            logger.error("no connection", throwables);
+            // logger
         }
-        try (PreparedStatement statement = connection.prepareStatement(SELECT_USERS_BY_LIMIT)) {
+        try (PreparedStatement statement = connection.prepareStatement(SQL_SELECT_USERS_BY_LIMIT)) {
             statement.setInt(1, start);
             statement.setInt(2, end);
             ResultSet rs = statement.executeQuery();
@@ -163,7 +163,30 @@ public class JDBCUserImpl implements UserDao {
             }
 
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            // logger
+        }finally {
+            close(connection);
+        }
+        return users;
+    }
+
+    @Override
+    public List<User> findAllManagers() {
+        List<User> users = new ArrayList<>();
+        Connection connection = null;
+        try {
+            connection = ConnectionPoolHolder.getInstance().getConnection();
+        } catch (SQLException throwables) {
+            // logger
+        }
+        try (PreparedStatement statement = connection.prepareStatement(SQL_GET_ALL_MANAGERS)) {
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                users.add(UserMapper.map(rs));
+            }
+
+        } catch (SQLException ex) {
+            // logger
         }finally {
             close(connection);
         }

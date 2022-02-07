@@ -1,30 +1,29 @@
-package controller.command.impl;
+package controller.command.impl.admin;
 
 import controller.command.Command;
-import model.entity.enums.Status;
-import model.service.OrderService;
+import model.service.CarService;
 import model.service.factory.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import static controller.Constants.*;
 import static controller.Path.*;
 
-public class ApproveBookingCommand implements Command {
+public class DeleteCarCommand implements Command {
 
-    OrderService orderService = ServiceFactory.getOrderService();
+    private final CarService carService = ServiceFactory.getCarService();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        int orderId = Integer.parseInt(request.getParameter(ID_PARAMETER));
+        int carId = Integer.parseInt(request.getParameter(ID_PARAMETER));
 
-        if(orderService.changeOrderStatusById(orderId, Status.APPROVED))
+        if (carService.deleteCar(carId))
             request.getSession().setAttribute(MESSAGE_PARAMETER, SUCCESS_MESSAGE);
         else
             request.getSession().setAttribute(MESSAGE_PARAMETER, FAIL_MESSAGE);
 
-        return REDIRECT + MANAGER_PAGE_COMMAND;
+        return REDIRECT + CARS_PAGE_COMMAND;
+
     }
 }

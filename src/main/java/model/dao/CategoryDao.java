@@ -1,6 +1,5 @@
 package model.dao;
 
-import model.entity.Car;
 import model.entity.Category;
 
 import java.util.List;

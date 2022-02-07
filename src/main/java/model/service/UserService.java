@@ -12,5 +12,8 @@ public interface UserService {
     User checkUsernameChange(HttpSession session, String name);
     int getNumberOfUsers();
     List<User> findUsersPagination(int currentPage, int rowsPerPage);
+    boolean changeBlockedStatus(int userId, boolean blocked);
+    List<User> findAllManagers();
+    Optional<User> createManager(String name, String password, String email, String phone);
 
 }

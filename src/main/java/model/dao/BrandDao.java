@@ -1,7 +1,6 @@
 package model.dao;
 
 import model.entity.Brand;
-import model.entity.Car;
 
 import java.util.List;
 

@@ -6,6 +6,8 @@ import model.entity.enums.Status;
 import java.util.List;
 
 public interface CarDao extends GenericDao<Car>{
+    boolean deleteCar(int carId);
+    boolean editCar(int carId, int price, String imageUrl);
     List<Car> findAllAvailableCars(int cityId, int categoryId, int brandId);
     List<Car> findAllCars();
     Car findById(int id);

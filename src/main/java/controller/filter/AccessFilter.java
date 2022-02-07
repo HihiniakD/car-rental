@@ -22,7 +22,8 @@ import static controller.Constants.*;
                 "/sortByPrice"),
         @WebInitParam(name = "user_urls", value = "/log_out,/my_booking,/info,/search_cars/view_deal," +
                 "/search_cars/view_deal/book,/search_cars/view_deal/book/process_booking"),
-        @WebInitParam(name = "admin_urls", value = "/admin_page,/log_out,/users,/cars,/managers"),
+        @WebInitParam(name = "admin_urls", value = "/admin_page,/log_out,/users,/cars,/managers,/blocking,/addManager," +
+                "/processAddManager,/deleteCar,/editCar,/processEditCar,/addCar,/processAddCar"),
         @WebInitParam(name = "manager_urls", value = "/manager_page,/log_out,/approveBooking,/declineBooking,/finishBooking," +
                 "/processDeclineBooking,/processFinishBooking")})
 public class AccessFilter implements Filter {
@@ -50,7 +51,7 @@ public class AccessFilter implements Filter {
         adminUrls = Arrays.stream(adminParameter.split(",")).map(String::trim).collect(Collectors.toList());
         managerUrls = Arrays.stream(managerParameter.split(",")).map(String::trim).collect(Collectors.toList());
 
-        System.out.println(guestUrls + "\n" + userUrls + "\n" + adminUrls + "\n" + managerUrls);
+        //залогировать все созданные урлы
     }
 
     @Override

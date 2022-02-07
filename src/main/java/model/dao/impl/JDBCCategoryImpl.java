@@ -24,7 +24,7 @@ public class JDBCCategoryImpl implements CategoryDao {
         try {
             connection = ConnectionPoolHolder.getInstance().getConnection();
         }catch (SQLException exception){
-            exception.printStackTrace();
+            //logger
         }
         try (PreparedStatement statement = connection.prepareStatement(SQL_GET_ALL_CATEGORIES)){
             ResultSet rs = statement.executeQuery();
@@ -33,28 +33,16 @@ public class JDBCCategoryImpl implements CategoryDao {
             }
         } catch (SQLException throwable) {
             // logger
-            System.out.println(throwable.getMessage());
         } finally {
             close(connection);
         }
-        System.out.println(categories + " Categories");
         return categories;
     }
 
     @Override
     public boolean create(Category entity) {
         return false;
-    }
-
-    @Override
-    public boolean update(Category entity) {
-        return false;
-    }
-
-    @Override
-    public boolean delete(Category entity) {
-        return false;
-    }
+    } //TODO
 
     @Override
     public void close(Connection connection) {

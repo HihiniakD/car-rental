@@ -30,8 +30,10 @@ public class ConnectionPoolHolder {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
         } catch (InstantiationException | IllegalAccessException e) {
+            //logger
             log.log(Level.INFO, "can't access");
         } catch (ClassNotFoundException e) {
+            //logger
             log.log(Level.INFO, "class not found");
         }
         if (dataSource == null) {

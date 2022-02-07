@@ -19,9 +19,9 @@ import static controller.Path.*;
 
 public class ProcessBookingCommand implements Command {
 
-    OrderService orderService = ServiceFactory.getOrderService();
-    UserService userService = ServiceFactory.getUserService();
-    CarService carService = ServiceFactory.getCarService();
+    private final OrderService orderService = ServiceFactory.getOrderService();
+    private final UserService userService = ServiceFactory.getUserService();
+    private final CarService carService = ServiceFactory.getCarService();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException {

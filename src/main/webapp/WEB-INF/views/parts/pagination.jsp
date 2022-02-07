@@ -4,7 +4,7 @@
         <ul class="pagination">
             <c:if test="${requestScope.currentPage != 1}">
                 <li class="page-item"><a class="page-link"
-                                         href="<%request.getRequestURI();%>?currentPage=${requestScope.currentPage - 1}">prev</a>
+                                         href="<%request.getRequestURI();%>?currentPage=${requestScope.currentPage - 1}"><fmt:message key="prev"/></a>
                 </li>
             </c:if>
 
@@ -12,7 +12,7 @@
                 <c:choose>
                     <c:when test="${requestScope.currentPage eq i}">
                         <li class="page-item active"><a class="page-link">
-                                ${i} <span class="sr-only">current</span></a>
+                                ${i} <span class="sr-only"><fmt:message key="current"/></span></a>
                         </li>
                     </c:when>
                     <c:otherwise>
@@ -25,7 +25,7 @@
 
             <c:if test="${requestScope.currentPage lt requestScope.numberOfPages}">
                 <li class="page-item"><a class="page-link"
-                                         href="<%request.getRequestURI();%>?currentPage=${requestScope.currentPage + 1}">next</a>
+                                         href="<%request.getRequestURI();%>?currentPage=${requestScope.currentPage + 1}"><fmt:message key="next"/></a>
                 </li>
             </c:if>
         </ul>

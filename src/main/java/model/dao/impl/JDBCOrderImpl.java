@@ -6,7 +6,6 @@ import model.dao.mapper.OrderExtendedMapper;
 import model.dao.mapper.OrderMapper;
 import model.entity.Order;
 import model.entity.OrderExtended;
-import model.entity.User;
 import model.entity.enums.Status;
 
 import java.sql.Connection;
@@ -39,7 +38,7 @@ public class JDBCOrderImpl implements OrderDao {
         try {
             connection = ConnectionPoolHolder.getInstance().getConnection();
         }catch (SQLException exception){
-            exception.printStackTrace();
+            // logger
         }
         try (PreparedStatement statement = connection.prepareStatement(SQL_CREATE_ORDER)){
             statement.setInt(1, entity.getUserId());
@@ -53,7 +52,6 @@ public class JDBCOrderImpl implements OrderDao {
             statement.executeUpdate();
         } catch (SQLException throwable) {
             // logger
-            System.out.println(throwable.getMessage());
             return false;
         } finally {
             close(connection);
@@ -62,22 +60,11 @@ public class JDBCOrderImpl implements OrderDao {
     }
 
     @Override
-    public boolean update(Order entity) {
-        return false;
-    }
-
-    @Override
-    public boolean delete(Order entity) {
-        return false;
-    }
-
-    @Override
     public void close(Connection connection) {
         try {
             connection.close();
         } catch (SQLException throwables) {
             //logger
-            throw new RuntimeException(throwables);
         }
     }
 
@@ -99,7 +86,7 @@ public class JDBCOrderImpl implements OrderDao {
             if(count >0)
                 return true;
         } catch (SQLException throwable) {
-            System.out.println(throwable.getMessage());
+            // logger
             return false;
         } finally {
             close(connection);
@@ -114,7 +101,7 @@ public class JDBCOrderImpl implements OrderDao {
         try {
             connection = ConnectionPoolHolder.getInstance().getConnection();
         }catch (SQLException exception){
-            exception.printStackTrace();
+            // logger
         }
         try (PreparedStatement statement = connection.prepareStatement(SQL_SET_STATUS_AND_COMMENT_BY_ID)){
             statement.setInt(1, status.getStatus());
@@ -124,7 +111,7 @@ public class JDBCOrderImpl implements OrderDao {
             if(count >0)
                 return true;
         } catch (SQLException throwable) {
-            System.out.println(throwable.getMessage());
+            // logger
             return false;
         } finally {
             close(connection);
@@ -139,7 +126,7 @@ public class JDBCOrderImpl implements OrderDao {
         try {
             connection = ConnectionPoolHolder.getInstance().getConnection();
         }catch (SQLException exception){
-            exception.printStackTrace();
+            // logger
         }
         Order order = null;
         try (PreparedStatement statement = connection.prepareStatement(SQL_GET_ORDER_BY_ID)){
@@ -149,7 +136,7 @@ public class JDBCOrderImpl implements OrderDao {
                     order = OrderMapper.map(rs);
             }
         } catch (SQLException throwable) {
-            System.out.println(throwable.getMessage());
+            // logger
         } finally {
             close(connection);
         }
@@ -162,7 +149,7 @@ public class JDBCOrderImpl implements OrderDao {
         try {
             connection = ConnectionPoolHolder.getInstance().getConnection();
         }catch (SQLException exception){
-            exception.printStackTrace();
+            // logger
         }
         try (PreparedStatement statement = connection.prepareStatement(SQL_CHANGE_ORDER_STATUS_BY_ID)){
             statement.setInt(1, status.getStatus());
@@ -171,7 +158,7 @@ public class JDBCOrderImpl implements OrderDao {
             if(count >0)
                 return true;
         } catch (SQLException throwable) {
-            System.out.println(throwable.getMessage());
+            // logger
             return false;
         } finally {
             close(connection);
@@ -188,18 +175,16 @@ public class JDBCOrderImpl implements OrderDao {
         try {
             connection = ConnectionPoolHolder.getInstance().getConnection();
         }catch (SQLException exception){
-            exception.printStackTrace();
+            // logger
         }
         try (PreparedStatement statement = connection.prepareStatement(SQL_GET_ALL_ORDERS_BY_USER_ID_EXT)){
             statement.setInt(1, userId);
-            System.out.println(statement + " statement");
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 orders.add(OrderExtendedMapper.map(rs));
             }
         } catch (SQLException throwable) {
             // logger
-            System.out.println(throwable.getMessage());
         } finally {
             close(connection);
         }
@@ -213,18 +198,16 @@ public class JDBCOrderImpl implements OrderDao {
         try {
             connection = ConnectionPoolHolder.getInstance().getConnection();
         }catch (SQLException exception){
-            exception.printStackTrace();
+            // logger
         }
         try (PreparedStatement statement = connection.prepareStatement(SQL_GET_ALL_ORDERS_BY_STATUS)){
             statement.setInt(1, status.getStatus());
-            System.out.println(statement + " statement");
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 orders.add(OrderExtendedMapper.map(rs));
             }
         } catch (SQLException throwable) {
             // logger
-            System.out.println(throwable.getMessage());
         } finally {
             close(connection);
         }

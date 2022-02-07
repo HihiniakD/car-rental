@@ -28,7 +28,8 @@
     </c:if>
 
     <div class="py-3 text-center">
-        <h3><fmt:message key="users"/></h3>
+        <h3><fmt:message key="managers"/></h3>
+        <button onclick="location.href='/addManager'"type="button" class="btn btn-success me-2"><fmt:message key="addManager"/></button>
     </div>
     <div class="table-responsive">
         <table class="table table-striped table-light">
@@ -43,20 +44,20 @@
             </tr>
             </thead>
             <tbody>
-            <c:forEach items="${requestScope.users}" var="user">
+            <c:forEach items="${requestScope.managers}" var="manager">
                 <tr>
-                    <td>${user.id}</td>
-                    <td>${user.name}</td>
-                    <td>${user.email}</td>
-                    <td>${user.phone}</td>
-                    <td><fmt:message key="${user.blocked}"/></td>
+                    <td>${manager.id}</td>
+                    <td>${manager.name}</td>
+                    <td>${manager.email}</td>
+                    <td>${manager.phone}</td>
+                    <td><fmt:message key="${manager.blocked}"/></td>
                     <td>
                         <c:choose>
-                            <c:when test="${user.blocked == true}">
-                                <a href="/blocking?id=<c:out value='${user.id}'/>&blocked=<c:out value='${user.blocked}'/>"><fmt:message key="unblockUser"/></a>
+                            <c:when test="${manager.blocked == true}">
+                                <a href="/blocking?id=<c:out value='${manager.id}'/>&blocked=<c:out value='${manager.blocked}'/>"><fmt:message key="unblockUser"/></a>
                             </c:when>
                             <c:otherwise>
-                                <a href="/blocking?id=<c:out value='${user.id}'/>&blocked=<c:out value='${user.blocked}'/>"><fmt:message key="blockUser"/></a>
+                                <a href="/blocking?id=<c:out value='${manager.id}'/>&blocked=<c:out value='${manager.blocked}'/>"><fmt:message key="blockUser"/></a>
                             </c:otherwise>
                         </c:choose>
                     </td>
@@ -64,8 +65,12 @@
             </c:forEach>
             </tbody>
         </table>
-        <%@ include file="parts/pagination.jsp" %>
     </div>
+
+
+
 </div>
+
+
 </body>
 </html>

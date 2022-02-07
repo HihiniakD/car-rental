@@ -2,17 +2,17 @@ package controller;
 
 public class Constants {
 
-    //errors
+    //errors constants
     public static final String EMAIL_NOT_VALID = "emailNotValid";
     public static final String PASSWORD_NOT_VALID = "passwordNotValid";
     public static final String NAME_NOT_VALID = "nameNotValid";
     public static final String PHONE_NOT_VALID = "phoneNotValid";
     public static final String USER_NOT_FOUND = "userNotFound";
+    public static final String DATA_NOT_VALID = "dataNotValid";
     public static final String USER_BLOCKED = "userBlocked";
     public static final String EMAIL_EXISTS = "emailExists";
     public static final String WRONG_PASSWORD = "wrongPassword";
     public static final String DATE_NOT_VALID = "dateNotValid";
-    public static final String DATE_NOT_POSITIVE = "dateNotPositiv";
     public static final String OTHER_ERROR = "otherError";
     public static final String CAR_NOT_AVAILABLE_ERROR = "carNotAvailable";
     public static final String CC_NAME_NOT_VALID_ERROR = "ccNameNotValid";
@@ -21,8 +21,7 @@ public class Constants {
     public static final String CC_CVV_NOT_VALID_ERROR = "ccCvvNotValid";
     public static final String MUST_LOGIN = "mustLogin";
 
-
-
+    //constants for retrieving and inserting from/into requests
     public static final String USER_PARAMETER = "user";
     public static final String USERS_PARAMETER = "users";
     public static final String ERROR_PARAMETER = "error";
@@ -66,17 +65,22 @@ public class Constants {
     public static final String PENALTY_PARAMETER = "penalty";
     public static final String CURRENT_PAGE_PARAMETER = "currentPage";
     public static final String NUMBER_OF_PAGES_PARAMETER = "numberOfPages";
+    public static final String BLOCKED_PARAMETER = "blocked";
+    public static final String MANAGERS_PARAMETER = "managers";
+    public static final String PRICE_PARAMETER = "price";
+    public static final String URL_PARAMETER = "url";
+    public static final String TRANSMISSION_PARAMETER = "transmission";
+    public static final String MODEL_PARAMETER = "model";
+    public static final String PASSENGERS_PARAMETER = "passengers";
 
-
-    //other
-    public static final String BACK_TO_INDEX = "to index";
-    public static final String EMPTY_COMMAND = "";
-
-    //Redirect messages
+    //redirect messages constants
     public static final String SUCCESS_BOOKING_MESSAGE = "successBookingMessage";
     public static final String SUCCESS_SIGN_UP_MESSAGE = "successSignUpMessage";
     public static final String SUCCESS_MESSAGE = "successMessage";
     public static final String FAIL_MESSAGE = "failMessage";
 
-
+    //other constants
+    public static final String BACK_TO_INDEX = "to index";
+    public static final String EMPTY_COMMAND = "";
+    public static final String NO_SUCH_INDEX = "No such index";
 }

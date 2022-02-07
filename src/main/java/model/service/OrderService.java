@@ -22,14 +22,6 @@ public interface OrderService {
     long calculateCarDriverPrice(long days);
     boolean processOrder(User user, Car car, String pickUpDate,
                          String dropOffDate, long totalPrice, boolean withDriver);
-    public boolean validateOrderPayment(String creditCardName, String creditCardNumber,
+    boolean validateOrderPayment(String creditCardName, String creditCardNumber,
                                         String creditCardExpiration, String creditCardCvv);
-
-
-
-
-    // добавить методы для пагинации
-    /// Code here
-
-
 }

@@ -16,7 +16,7 @@ import static controller.Path.SEARCH_CARS_VIEW;
 
 public class SortCarsByPriceCommand implements Command {
 
-    CarService carService = ServiceFactory.getCarService();
+    private final CarService carService = ServiceFactory.getCarService();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException {

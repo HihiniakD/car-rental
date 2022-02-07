@@ -18,7 +18,7 @@ import static controller.Constants.*;
 
 public class MyBookingCommand implements Command {
 
-    OrderService orderService = ServiceFactory.getOrderService();
+    private final OrderService orderService = ServiceFactory.getOrderService();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException {

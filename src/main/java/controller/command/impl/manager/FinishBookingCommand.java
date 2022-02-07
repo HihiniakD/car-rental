@@ -1,4 +1,4 @@
-package controller.command.impl;
+package controller.command.impl.manager;
 
 import controller.command.Command;
 import model.entity.Order;
@@ -9,14 +9,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static controller.Constants.ID_PARAMETER;
-import static controller.Constants.ORDER_PARAMETER;
-import static controller.Path.DECLINE_ORDER_VIEW;
-import static controller.Path.FINISH_ORDER_VIEW;
+import static controller.Constants.*;
+import static controller.Path.*;
 
 public class FinishBookingCommand implements Command {
 
-    OrderService orderService = ServiceFactory.getOrderService();
+    private final OrderService orderService = ServiceFactory.getOrderService();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException {

@@ -1,6 +1,7 @@
 package model.util;
 
-public class PriceSevice {
+public class PriceService {
+
     private static final int PRICE_FOR_DAY = 20;
 
     public static long calculateTotalPrice(int price, long days){

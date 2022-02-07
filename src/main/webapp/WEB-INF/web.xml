@@ -19,7 +19,6 @@
             <taglib-location>/WEB-INF/tags.tld</taglib-location>
         </taglib>
     </jsp-config>
-
 </web-app>
 
 

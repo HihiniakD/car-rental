@@ -1,4 +1,4 @@
-package controller.command.impl;
+package controller.command.impl.admin;
 
 import controller.command.Command;
 import model.entity.User;
@@ -19,13 +19,12 @@ public class UsersCommand implements Command {
     private int currentPage = 1;
     private int numberOfPages;
 
-    UserService userService =  ServiceFactory.getUserService();
+    private final UserService userService =  ServiceFactory.getUserService();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         getCurrentPage(request);
         int numberOfRows = userService.getNumberOfUsers();
-        System.out.println("numberOfRows " + numberOfRows);
 
         List<User> users = userService.findUsersPagination(currentPage, numberOfPages);
         getNumberOfPages(numberOfRows);

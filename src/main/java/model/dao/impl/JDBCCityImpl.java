@@ -20,17 +20,7 @@ public class JDBCCityImpl implements CityDao {
     @Override
     public boolean create(City entity) {
         return false;
-    }
-
-    @Override
-    public boolean update(City entity) {
-        return false;
-    }
-
-    @Override
-    public boolean delete(City entity) {
-        return false;
-    }
+    } //TODO
 
     @Override
     public void close(Connection connection) {
@@ -38,7 +28,6 @@ public class JDBCCityImpl implements CityDao {
             connection.close();
         } catch (SQLException throwables) {
             //logger
-            throw new RuntimeException(throwables);
         }
     }
 
@@ -49,7 +38,7 @@ public class JDBCCityImpl implements CityDao {
         try {
             connection = ConnectionPoolHolder.getInstance().getConnection();
         }catch (SQLException exception){
-            exception.printStackTrace();
+            //logger
         }
         try (PreparedStatement statement = connection.prepareStatement(SQL_GET_ALL_CITIES)){
             ResultSet rs = statement.executeQuery();
@@ -58,7 +47,6 @@ public class JDBCCityImpl implements CityDao {
             }
         } catch (SQLException throwable) {
             // logger
-            System.out.println(throwable.getMessage());
         } finally {
             close(connection);
         }
@@ -72,7 +60,7 @@ public class JDBCCityImpl implements CityDao {
         try {
             connection = ConnectionPoolHolder.getInstance().getConnection();
         }catch (SQLException exception){
-            exception.printStackTrace();
+            //logger
         }
         try (PreparedStatement statement = connection.prepareStatement(SQL_GET_CITY_NAME_BY_ID)){
             statement.setInt(1, id);
@@ -82,7 +70,6 @@ public class JDBCCityImpl implements CityDao {
             }
         } catch (SQLException throwable) {
             // logger
-            System.out.println(throwable.getMessage());
         } finally {
             close(connection);
         }

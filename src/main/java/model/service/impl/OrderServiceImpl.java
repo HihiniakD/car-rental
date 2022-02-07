@@ -10,7 +10,7 @@ import model.entity.User;
 import model.entity.enums.Status;
 import model.exception.ServiceException;
 import model.service.OrderService;
-import model.util.PriceSevice;
+import model.util.PriceService;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -19,7 +19,7 @@ import static controller.Constants.*;
 
 public class OrderServiceImpl implements OrderService {
 
-    OrderDao orderDao = DaoFactory.getInstance().createOrderDao();
+    private final OrderDao orderDao = DaoFactory.getInstance().createOrderDao();
 
     @Override
     public boolean changeOrderStatusById(int orderId, Status status) {
@@ -72,12 +72,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public long calculateTotalPrice(int price, long days) {
-        return PriceSevice.calculateTotalPrice(price, days);
+        return PriceService.calculateTotalPrice(price, days);
     }
 
     @Override
     public long calculateCarDriverPrice(long days) {
-        return PriceSevice.calculateCarDrivePrice(days);
+        return PriceService.calculateCarDrivePrice(days);
     }
 
     @Override
@@ -120,9 +120,6 @@ public class OrderServiceImpl implements OrderService {
         }catch (NumberFormatException exception){
             throw new ServiceException(FAIL_MESSAGE);
         }
-
         return true;
     }
-
-
 }

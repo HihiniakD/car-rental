@@ -17,7 +17,7 @@ import static controller.Constants.*;
 
 public class UserServiceImpl implements UserService {
 
-     private UserDao userDao = JDBCDaoFactory.getInstance().createUserDao();
+     private final UserDao userDao = JDBCDaoFactory.getInstance().createUserDao();
 
     @Override
     public Optional<User> signUpUser(String name, String password, String email, String phone) throws ServiceException{
@@ -42,7 +42,6 @@ public class UserServiceImpl implements UserService {
         if (user == null)
             throw new ServiceException(USER_NOT_FOUND);
 
-        //ПЕРЕПИСАТЬ
         try {
             if (!Security.isPasswordCorrect(password, user.getPassword()))
                 throw new ServiceException(WRONG_PASSWORD);
@@ -67,7 +66,6 @@ public class UserServiceImpl implements UserService {
             userDao.changeUserNameById(user.getId(), name);
             user.setName(name);
         }
-
         return user;
     }
 
@@ -81,6 +79,32 @@ public class UserServiceImpl implements UserService {
         int start = currentPage * rowsPerPage - rowsPerPage;
         return userDao.findUsers(start, rowsPerPage);
     }
+
+    @Override
+    public boolean changeBlockedStatus(int userId, boolean blocked) {
+        return userDao.changeBlockedStatus(userId, !blocked);
+    }
+
+    @Override
+    public List<User> findAllManagers() {
+        return userDao.findAllManagers();
+    }
+
+    @Override
+    public Optional<User> createManager(String name, String password, String email, String phone) {
+        validateSignUpParams(name, password, email, phone);
+        String hashPassword = Security.hashPassword(password);
+        User user = new User();
+        user.setName(name);
+        user.setEmail(email);
+        user.setPassword(hashPassword);
+        user.setPhone(phone);
+        user.setRoleId(Role.MANAGER.getRole());
+        user.setBlocked(false);
+        userDao.create(user);
+        return Optional.ofNullable(userDao.findUserByEmail(email));
+    }
+
 
     private void validateSignUpParams(String name, String password, String email, String phone) throws ServiceException{
         if (!Security.isEmailValid(email))
@@ -106,5 +130,4 @@ public class UserServiceImpl implements UserService {
         if (!Security.isPasswordValid(password))
             throw new ServiceException(PASSWORD_NOT_VALID);
     }
-
 }

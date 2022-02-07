@@ -21,6 +21,7 @@ public class Security {
     public static final String CC_NAME_REGEX = "(?<! )[-a-zA-Z' ]{2,26}";
     public static final String CC_EXPIRATION_REGEX = "^(0[1-9]|1[0-2])\\/?([0-9]{2})$";
     public static final String CC_CVV_REGEX = "^[0-9]{3,4}$";
+    public static final String URL_REGEX = "^https.*";
 
     public static String hashPassword(final String password) {
         byte[] salt = new byte[SALT_LENGTH / 8];
@@ -82,6 +83,10 @@ public class Security {
 
     public static boolean isCreditCardCvvValid(String creditCardCvv) {
         return creditCardCvv != null && !creditCardCvv.isBlank() && creditCardCvv.matches(CC_CVV_REGEX);
+    }
+
+    public static boolean isUrlValid(String imageUrl) {
+        return imageUrl != null && !imageUrl.isBlank() && imageUrl.matches(URL_REGEX);
     }
 
 

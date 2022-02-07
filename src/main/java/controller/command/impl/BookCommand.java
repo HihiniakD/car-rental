@@ -16,8 +16,8 @@ import static controller.Path.*;
 
 public class BookCommand implements Command {
 
-    CityService cityService = ServiceFactory.getCityService();
-    OrderService orderService = ServiceFactory.getOrderService();
+    private final CityService cityService = ServiceFactory.getCityService();
+    private final OrderService orderService = ServiceFactory.getOrderService();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
