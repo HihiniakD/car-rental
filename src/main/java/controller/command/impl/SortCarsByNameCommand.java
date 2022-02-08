@@ -2,8 +2,8 @@ package controller.command.impl;
 
 import controller.command.Command;
 import model.entity.Car;
-import model.service.CarService;
-import model.service.factory.ServiceFactory;
+import service.CarService;
+import service.factory.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,7 +27,6 @@ public class SortCarsByNameCommand implements Command {
 
         List<Car> sortedCars = carService.findAllAvailableCarsSortedByName(cityId, categoryId, brandId);
         request.setAttribute(CARS_PARAMETER, sortedCars);
-        System.out.println(sortedCars);
         return SEARCH_CARS_VIEW;
     }
 }

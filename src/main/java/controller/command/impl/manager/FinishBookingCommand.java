@@ -2,8 +2,8 @@ package controller.command.impl.manager;
 
 import controller.command.Command;
 import model.entity.Order;
-import model.service.OrderService;
-import model.service.factory.ServiceFactory;
+import service.OrderService;
+import service.factory.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

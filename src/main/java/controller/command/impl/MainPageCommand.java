@@ -4,10 +4,10 @@ import controller.command.Command;
 import model.entity.Brand;
 import model.entity.Category;
 import model.entity.City;
-import model.service.BrandService;
-import model.service.CategoryService;
-import model.service.CityService;
-import model.service.factory.ServiceFactory;
+import service.BrandService;
+import service.CategoryService;
+import service.CityService;
+import service.factory.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

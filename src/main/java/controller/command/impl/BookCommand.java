@@ -2,9 +2,9 @@ package controller.command.impl;
 
 import controller.command.Command;
 import model.entity.Car;
-import model.service.CityService;
-import model.service.OrderService;
-import model.service.factory.ServiceFactory;
+import service.CityService;
+import service.OrderService;
+import service.factory.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

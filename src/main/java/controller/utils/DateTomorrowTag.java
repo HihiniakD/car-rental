@@ -5,7 +5,10 @@ import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
 import java.time.LocalDate;
 
-
+/**
+ * JSP Custom tag
+ * Return LocalDate date: tomorrow date.
+ */
 public class DateTomorrowTag extends TagSupport {
 
     @Override

@@ -3,6 +3,9 @@ package controller.utils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * Helper class to manipulate with HttpServletRequest
+ */
 public class RequestUtils {
 
     public static <T> T getSessionAttribute(HttpServletRequest request, String attributeName, Class<T> clazz) {

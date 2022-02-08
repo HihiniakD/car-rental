@@ -1,10 +1,10 @@
 package model.service.impl;
 
 import controller.Constants;
-import model.dao.factory.DaoFactory;
-import model.dao.impl.JDBCUserImpl;
+import dao.factory.DaoFactory;
+import dao.impl.JDBCUserImpl;
 import model.entity.User;
-import model.exception.ServiceException;
+import service.exception.ServiceException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,6 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import service.impl.UserServiceImpl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;

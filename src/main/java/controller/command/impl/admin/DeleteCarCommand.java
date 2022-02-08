@@ -1,8 +1,8 @@
 package controller.command.impl.admin;
 
 import controller.command.Command;
-import model.service.CarService;
-import model.service.factory.ServiceFactory;
+import service.CarService;
+import service.factory.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

@@ -83,4 +83,11 @@ public class Constants {
     public static final String BACK_TO_INDEX = "to index";
     public static final String EMPTY_COMMAND = "";
     public static final String NO_SUCH_INDEX = "No such index";
+
+    //constants for logging
+    public static final String SQL_GET_CONNECTION_ERROR = "Exception thrown while getting connection";
+    public static final String SQL_CLOSE_CONNECTION_ERROR = "Exception thrown while closing connection";
+    public static final String SQL_QUERY_ERROR = "Exception thrown while querying ";
+    public static final String DB_CLASS_NOT_FOUND_ERROR = "ClassNot Found exception thrown";
+    public static final String DB_ACCESS_ERROR = "Can`t access data base";
 }

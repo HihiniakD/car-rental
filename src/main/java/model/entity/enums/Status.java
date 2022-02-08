@@ -2,6 +2,10 @@ package model.entity.enums;
 
 import static controller.Constants.NO_SUCH_INDEX;
 
+/**
+ * ENUM for all DB statuses
+ *
+ */
 public enum Status {
     AVAILABLE(1),
     BUSY(2),

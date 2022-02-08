@@ -4,7 +4,10 @@ import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
 
-
+/**
+ * JSP Custom tag
+ * Return car price: one day price multiplied by the number of days.
+ */
 public class PriceTag extends TagSupport {
     private int price;
     private long days;

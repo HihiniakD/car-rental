@@ -10,6 +10,11 @@ import java.util.Map;
 
 import static controller.Path.INDEX_VIEW;
 
+
+/**
+ * Factory of commands.
+ * Return command class
+ */
 public class CommandFactory {
     private static Map<String, Command> commands = new HashMap<>();
 
@@ -47,6 +52,10 @@ public class CommandFactory {
         commands.put("processAddCar", new ProcessAddCarCommand());
     }
 
+    /**
+     * @param url representing a command as a string
+     * @return Command class
+     */
     public static Command getCommand(String url){
         Command command = commands.getOrDefault(url, (r,response) -> INDEX_VIEW);
         return command;

@@ -11,6 +11,10 @@ import java.io.IOException;
 import static controller.Constants.*;
 import static controller.Path.*;
 
+/**
+ * Dispatcher servlet that handles all requests.
+ * According to request URI return command that execute business logic
+ */
 @WebServlet(value = "/")
 public class Servlet extends HttpServlet {
 
@@ -23,7 +27,6 @@ public class Servlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
     }
-
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String path = request.getRequestURI();

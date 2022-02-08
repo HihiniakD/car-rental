@@ -11,7 +11,7 @@
     <title><fmt:message key="editCar"/></title>
 </head>
 <body>
-<jsp:include page="parts/_manager_header.jsp"></jsp:include>
+<jsp:include page="parts/_admin_header.jsp"></jsp:include>
 <section class="h-100">
     <div class="container h-100">
         <div class="row justify-content-sm-center h-100">

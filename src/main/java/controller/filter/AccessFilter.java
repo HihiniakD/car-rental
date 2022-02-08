@@ -3,6 +3,7 @@ package controller.filter;
 import controller.Path;
 import model.entity.User;
 import model.entity.enums.Role;
+import org.apache.log4j.Logger;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -17,6 +18,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import static controller.Constants.*;
 
+
+/**
+ * Access filter for every page
+ */
 @WebFilter(filterName = "AccessFilter", urlPatterns = "/*", initParams = {@WebInitParam(name = "guest_urls", value =
         "/,/login,/process_login,/sign_up,/search_cars,/process_sign_up,/search_cars,/search_cars/view_deal,/sortByName," +
                 "/sortByPrice"),
@@ -27,6 +32,8 @@ import static controller.Constants.*;
         @WebInitParam(name = "manager_urls", value = "/manager_page,/log_out,/approveBooking,/declineBooking,/finishBooking," +
                 "/processDeclineBooking,/processFinishBooking")})
 public class AccessFilter implements Filter {
+
+    private static final Logger logger = Logger.getLogger(AccessFilter.class);
 
     public static final String USER_ATTRIBUTE = "user";
     public static final String GUEST_URLS = "guest_urls";
@@ -39,6 +46,9 @@ public class AccessFilter implements Filter {
     private List<String> adminUrls = new ArrayList<>();
     private List<String> managerUrls = new ArrayList<>();
 
+    /**
+     * Initializing allowed commands(pages) for each role
+     */
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         String guestParameter = filterConfig.getInitParameter(GUEST_URLS);
@@ -51,15 +61,20 @@ public class AccessFilter implements Filter {
         adminUrls = Arrays.stream(adminParameter.split(",")).map(String::trim).collect(Collectors.toList());
         managerUrls = Arrays.stream(managerParameter.split(",")).map(String::trim).collect(Collectors.toList());
 
-        //залогировать все созданные урлы
+        logger.info(String.format("Initialized URL`s. %s: %s\n%s:%s\n%s:%s\n%s:%s",GUEST_URLS,guestUrls,
+                USER_URLS,userUrls,ADMIN_URLS,adminUrls,MANAGER_URLS,managerUrls));
+        System.out.println(adminUrls);
     }
 
+    /**
+     * Filter each request.
+     * According to allowed lists filter decides what to do: allow process request or return 404 Not Found Page
+     */
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         final HttpServletRequest request = (HttpServletRequest) servletRequest;
         final HttpServletResponse response = (HttpServletResponse) servletResponse;
         final HttpSession session = request.getSession(false);
-        System.out.println(request.getRequestURI());
 
         if (guestUrls.contains(request.getRequestURI())) {
             filterChain.doFilter(request, response);

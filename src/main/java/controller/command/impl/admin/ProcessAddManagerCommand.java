@@ -2,10 +2,10 @@ package controller.command.impl.admin;
 
 import controller.command.Command;
 import model.entity.User;
-import model.exception.HashException;
-import model.exception.ServiceException;
-import model.service.UserService;
-import model.service.factory.ServiceFactory;
+import service.exception.HashException;
+import service.exception.ServiceException;
+import service.UserService;
+import service.factory.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

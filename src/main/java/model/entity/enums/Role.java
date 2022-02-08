@@ -1,5 +1,9 @@
 package model.entity.enums;
 
+/**
+ * ENUM for all DB user roles
+ *
+ */
 public enum Role {
     GUEST(0),
     USER(1),

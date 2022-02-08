@@ -4,10 +4,11 @@ import controller.command.Command;
 import controller.utils.RequestUtils;
 import model.entity.User;
 import model.entity.enums.Role;
-import model.exception.HashException;
-import model.exception.ServiceException;
-import model.service.UserService;
-import model.service.factory.ServiceFactory;
+import org.apache.log4j.Logger;
+import service.exception.HashException;
+import service.exception.ServiceException;
+import service.UserService;
+import service.factory.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +21,8 @@ import static controller.Path.*;
 
 
 public class ProcessSignUpCommand implements Command {
+
+    private static final Logger logger = Logger.getLogger(ProcessSignUpCommand.class);
 
     private final UserService userService = ServiceFactory.getUserService();
 
@@ -53,6 +56,7 @@ public class ProcessSignUpCommand implements Command {
             HttpSession session = request.getSession(true); // загуглить
             session.setAttribute(USER_PARAMETER, user.get());
             session.setMaxInactiveInterval(86400);
+            logger.info(String.format("%s successfully signed up", user.get().getName()));
             if (Role.ADMIN.getRole() == user.get().getRoleId()) {
                 return REDIRECT + ADMIN_PAGE_COMMAND;
             }

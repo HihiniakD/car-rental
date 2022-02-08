@@ -6,6 +6,9 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
+/**
+ * I18n filter for every page
+ */
 @WebFilter(filterName = "LangFilter", urlPatterns = "/*")
 public class LangFilter implements Filter {
 
@@ -14,6 +17,9 @@ public class LangFilter implements Filter {
     public static final String LANG_COOKIE_NAME = "lang";
     public static final String ENCODING = "UTF-8";
 
+    /**
+     * Retrieving lang cookie and sets appropriate language for every request
+     */
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
         request.setCharacterEncoding(ENCODING);

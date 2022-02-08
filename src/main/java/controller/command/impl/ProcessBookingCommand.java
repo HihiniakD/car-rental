@@ -4,11 +4,11 @@ import controller.command.Command;
 import model.entity.Car;
 import model.entity.User;
 import model.entity.enums.Status;
-import model.exception.ServiceException;
-import model.service.CarService;
-import model.service.OrderService;
-import model.service.UserService;
-import model.service.factory.ServiceFactory;
+import service.exception.ServiceException;
+import service.CarService;
+import service.OrderService;
+import service.UserService;
+import service.factory.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
