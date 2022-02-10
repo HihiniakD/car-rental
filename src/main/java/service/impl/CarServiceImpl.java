@@ -20,7 +20,7 @@ import static controller.Constants.*;
  */
 public class CarServiceImpl implements CarService {
 
-    private final CarDao carDao = DaoFactory.getInstance().createCarDao();
+    private CarDao carDao = DaoFactory.getInstance().createCarDao();
 
     @Override
     public Boolean addCar(int brandId, String model, int passengers, String price, String transmission, int categoryId, int cityId, String imageUrl) {

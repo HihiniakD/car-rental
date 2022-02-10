@@ -40,6 +40,7 @@ public class ProcessBookingCommand implements Command {
 
         try {
             user = userService.checkUsernameChange(session, name);
+            session.setAttribute(USER_PARAMETER, user);
         }catch (ServiceException exception){
             request.setAttribute(ERROR_PARAMETER, exception.getMessage());
             return BOOK_VIEW;

@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class CityServiceImpl implements CityService {
 
-    private final CityDao cityDao = DaoFactory.getInstance().createCityDao();
+    private CityDao cityDao = DaoFactory.getInstance().createCityDao();
 
     @Override
     public List<City> findAllCities() {

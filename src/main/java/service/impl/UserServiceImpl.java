@@ -19,7 +19,7 @@ import static controller.Constants.*;
  */
 public class UserServiceImpl implements UserService {
 
-     private final UserDao userDao = JDBCDaoFactory.getInstance().createUserDao();
+    private UserDao userDao = JDBCDaoFactory.getInstance().createUserDao();
 
     @Override
     public Optional<User> signUpUser(String name, String password, String email, String phone) throws ServiceException {

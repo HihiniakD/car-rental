@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class BrandServiceImpl implements BrandService {
 
-    private final BrandDao brandDao = DaoFactory.getInstance().createBrandDao();
+    private BrandDao brandDao = DaoFactory.getInstance().createBrandDao();
 
     @Override
     public List<Brand> findAllBrands() {

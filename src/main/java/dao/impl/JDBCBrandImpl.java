@@ -50,7 +50,7 @@ public class JDBCBrandImpl implements BrandDao {
     @Override
     public boolean create(Brand entity) {
         return false;
-    } // TODO
+    }
 
     @Override
     public void close(Connection connection) {

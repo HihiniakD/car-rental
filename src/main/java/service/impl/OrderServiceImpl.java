@@ -22,7 +22,7 @@ import static controller.Constants.*;
  */
 public class OrderServiceImpl implements OrderService {
 
-    private final OrderDao orderDao = DaoFactory.getInstance().createOrderDao();
+    private OrderDao orderDao = DaoFactory.getInstance().createOrderDao();
 
     @Override
     public boolean changeOrderStatusById(int orderId, Status status) {

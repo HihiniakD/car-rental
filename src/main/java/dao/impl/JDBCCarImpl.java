@@ -248,7 +248,6 @@ public class JDBCCarImpl implements CarDao {
             statement.setInt(2, categoryId);
             statement.setInt(3, brandId);
             statement.setInt(4, FIELD_AVAILABLE);
-//            statement.setString(5, FIELD_MODEL);
             try (ResultSet rs = statement.executeQuery()) {
                 while (rs.next()) {
                     cars.add(CarMapper.map(rs));

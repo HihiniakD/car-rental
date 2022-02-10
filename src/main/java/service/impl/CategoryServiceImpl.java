@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class CategoryServiceImpl implements CategoryService {
 
-    private final CategoryDao categoryDao = DaoFactory.getInstance().createCategoryDao();
+    private CategoryDao categoryDao = DaoFactory.getInstance().createCategoryDao();
 
     @Override
     public List<Category> findAllCategories() {
