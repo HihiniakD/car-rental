@@ -47,5 +47,4 @@ public class DateServiceTest {
         String dropOfDays = LocalDate.now().plusDays(1).toString();
         DateService.countDays(VALID_PICK_UP_DAY, dropOfDays);
     }
-
 }

@@ -1,22 +1,25 @@
 package model.service.impl;
 
 import controller.Constants;
-import controller.security.Security;
 import dao.factory.DaoFactory;
 import dao.impl.JDBCUserImpl;
 import model.entity.User;
+import org.mockito.Mockito;
 import service.exception.ServiceException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
+
 import org.mockito.MockitoAnnotations;
 import service.impl.UserServiceImpl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
+import java.util.List;
+
+import static org.junit.Assert.*;
+import static org.mockito.Matchers.anyBoolean;
+import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.when;
 
 public class UserServiceImplTest {
@@ -30,24 +33,34 @@ public class UserServiceImplTest {
     @Mock
     private DaoFactory daoFactory;
 
+    private UserServiceImpl userService;
+
+    public static final int ID = 1;
+    public static final String VALID_EMAIL = "email@gmail.com";
+    public static final String NOT_VALID_EMAIL = "emailgmail.com";
+    public static final String VALID_PASSWORD = "Qwerty90";
+    public static final String NOT_VALID_PASSWORD = "qwey0";
+    public static final String HASHED_PASSWORD = "afc66dd493e595058ed1acf22790e5427f5c7abfb1139382fc93b5aa623cfaff7e43ca3fd84a7e0b6bcd1d0a29e7ea7639a57dc43d499ac64010b8b4340cbf1a5e274b8b80ccf0c947eeec9f8d620ff1";
+    public static final String VALID_NAME = "Steve Rambo";
+    public static final String VALID_PHONE = "380111111111";
+    public static final String NOT_VALID_PHONE = "380111";
+
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
+        userService = new UserServiceImpl();
         when(daoFactory.createUserDao()).thenReturn(userDao);
     }
 
     @Test
     public void shouldReturnUserWhenInputDataIsValidSignUp() {
-        String validEmail = "test@gmail.com";
-        String validPassword = "qwerty90";
-        String validName = "testName";
-        String validPhoneNumber = "380111111111";
-        Mockito.when(userDao.create(Mockito.any(User.class))).thenReturn(true);
-        Mockito.when(userDao.findUserByEmail(validEmail)).thenReturn(null)
-                .thenReturn(createUser(validEmail, validPassword, validName, validPhoneNumber));
 
-        User testUser = serviceUnderTest.signUpUser(validName, validPassword, validEmail, validPhoneNumber).get();
+        Mockito.when(userDao.create(Mockito.any(User.class))).thenReturn(true);
+        Mockito.when(userDao.findUserByEmail(VALID_EMAIL)).thenReturn(null)
+                .thenReturn(createUser(VALID_EMAIL, VALID_PASSWORD, VALID_NAME, VALID_PHONE));
+
+        User testUser = serviceUnderTest.signUpUser(VALID_NAME, VALID_PASSWORD, VALID_EMAIL, VALID_PHONE).get();
 
         Assert.assertNotNull(testUser);
     }
@@ -57,16 +70,15 @@ public class UserServiceImplTest {
                                    String validName,
                                    String validPhoneNumber) {
 
-        return new User(1, validName, validPassword, validEmail, validPhoneNumber, 1, false);
+        return new User(ID, validName, validPassword, validEmail, validPhoneNumber, ID, false);
     }
 
     @Test
     public void shouldThrowServiceExceptionWithMessageEmailNotValidSignUp(){
-        String invalidEmail = "testsdgmail.com";
 
         ServiceException exception = assertThrows(
                 ServiceException.class,
-                () -> { serviceUnderTest.signUpUser("test","mock",invalidEmail,"etet"); }
+                () -> { serviceUnderTest.signUpUser(VALID_NAME,VALID_PASSWORD,NOT_VALID_EMAIL,VALID_PHONE); }
         );
 
         assertEquals(Constants.EMAIL_NOT_VALID,exception.getMessage());
@@ -74,11 +86,10 @@ public class UserServiceImplTest {
 
     @Test
     public void shouldThrowServiceExceptionWithMessagePasswordNotValidSignUp(){
-        String invalidPassword = "3453g";
 
         ServiceException exception = assertThrows(
                 ServiceException.class,
-                () -> { serviceUnderTest.signUpUser("test", invalidPassword,"email@gmail.com","etet"); }
+                () -> { serviceUnderTest.signUpUser(VALID_NAME, NOT_VALID_PASSWORD,VALID_EMAIL,VALID_PHONE); }
         );
 
         assertEquals(Constants.PASSWORD_NOT_VALID,exception.getMessage());
@@ -86,11 +97,10 @@ public class UserServiceImplTest {
 
     @Test
     public void shouldThrowServiceExceptionWithMessagePhoneNotValidSignUp(){
-        String invalidPhone = "3809655";
 
         ServiceException exception = assertThrows(
                 ServiceException.class,
-                () -> { serviceUnderTest.signUpUser("test", "Qwerty90@","email@gmail.com",invalidPhone); }
+                () -> { serviceUnderTest.signUpUser(VALID_NAME, VALID_PASSWORD,VALID_EMAIL,NOT_VALID_PHONE); }
         );
 
         assertEquals(Constants.PHONE_NOT_VALID,exception.getMessage());
@@ -102,11 +112,11 @@ public class UserServiceImplTest {
         String validPassword = "Qwerty90@";
         String hashedPassword = "afc66dd493e595058ed1acf22790e5427f5c7abfb1139382fc93b5aa623cfaff7e43ca3fd84a7e0b6bcd1d0a29e7ea7639a57dc43d499ac64010b8b4340cbf1a5e274b8b80ccf0c947eeec9f8d620ff1";
         User user = new User();
-        user.setName("Dmytro");
-        user.setEmail(validEmail);
+        user.setName(VALID_NAME);
+        user.setEmail(VALID_EMAIL);
         user.setPassword(hashedPassword);
         user.setBlocked(false);
-        user.setRoleId(1);
+        user.setRoleId(ID);
         Mockito.when(userDao.findUserByEmail(validEmail)).thenReturn(user);
 
         User testUser = serviceUnderTest.loginUser(validEmail, validPassword);
@@ -116,13 +126,12 @@ public class UserServiceImplTest {
 
     @Test
     public void shouldReturnExceptionWithMessageUserNotFoundLogin() throws Exception {
-        String notFoundEmail = "test1@gmail.com";
-        String password = "Qwerty90@";
-        Mockito.when(userDao.findUserByEmail(notFoundEmail)).thenReturn(null);
+
+        Mockito.when(userDao.findUserByEmail(VALID_EMAIL)).thenReturn(null);
 
         ServiceException exception = assertThrows(
                 ServiceException.class,
-                () -> { serviceUnderTest.loginUser(notFoundEmail, password); }
+                () -> { serviceUnderTest.loginUser(VALID_EMAIL, VALID_PASSWORD); }
         );
         assertEquals(Constants.USER_NOT_FOUND,exception.getMessage());
     }
@@ -169,11 +178,10 @@ public class UserServiceImplTest {
 
     @Test
     public void shouldThrowServiceExceptionWithMessageEmailNotValidLogin(){
-        String invalidEmail = "testsdgmail.com";
 
         ServiceException exception = assertThrows(
                 ServiceException.class,
-                () -> { serviceUnderTest.loginUser(invalidEmail, "Qwerty90@"); }
+                () -> { serviceUnderTest.loginUser(NOT_VALID_EMAIL, VALID_PASSWORD); }
         );
 
         assertEquals(Constants.EMAIL_NOT_VALID,exception.getMessage());
@@ -181,37 +189,31 @@ public class UserServiceImplTest {
 
     @Test
     public void shouldThrowServiceExceptionWithMessagePasswordNotValidLogin(){
-        String invalidPassword = "3453g";
 
         ServiceException exception = assertThrows(
                 ServiceException.class,
-                () -> { serviceUnderTest.loginUser("email@gmail.com", invalidPassword); }
+                () -> { serviceUnderTest.loginUser(VALID_EMAIL, NOT_VALID_PASSWORD); }
         );
         assertEquals(Constants.PASSWORD_NOT_VALID,exception.getMessage());
     }
 
     @Test
     public void shouldReturnUserWhenInputDataIsValidCreateManager() {
-        String validEmail = "test@gmail.com";
-        String validPassword = "qwerty90";
-        String validName = "testName";
-        String validPhoneNumber = "380111111111";
         Mockito.when(userDao.create(Mockito.any(User.class))).thenReturn(true);
-        Mockito.when(userDao.findUserByEmail(validEmail)).thenReturn(null)
-                .thenReturn(createUser(validEmail, validPassword, validName, validPhoneNumber));
+        Mockito.when(userDao.findUserByEmail(VALID_EMAIL)).thenReturn(null)
+                .thenReturn(createUser(VALID_EMAIL, VALID_PASSWORD, VALID_NAME, VALID_PHONE));
 
-        User testUser = serviceUnderTest.createManager(validName, validPassword, validEmail, validPhoneNumber).get();
+        User testUser = serviceUnderTest.createManager(VALID_NAME, VALID_PASSWORD, VALID_EMAIL, VALID_PHONE).get();
 
         Assert.assertNotNull(testUser);
     }
 
     @Test
     public void shouldThrowServiceExceptionWithMessageEmailNotValidCreateManager(){
-        String invalidEmail = "testsdgmail.com";
 
         ServiceException exception = assertThrows(
                 ServiceException.class,
-                () -> { serviceUnderTest.createManager("test","mock",invalidEmail,"etet"); }
+                () -> { serviceUnderTest.createManager(VALID_NAME,VALID_PASSWORD,NOT_VALID_EMAIL,VALID_PHONE); }
         );
 
         assertEquals(Constants.EMAIL_NOT_VALID,exception.getMessage());
@@ -219,11 +221,10 @@ public class UserServiceImplTest {
 
     @Test
     public void shouldThrowServiceExceptionWithMessagePasswordNotValidCreateManager(){
-        String invalidPassword = "3453g";
 
         ServiceException exception = assertThrows(
                 ServiceException.class,
-                () -> { serviceUnderTest.createManager("test", invalidPassword,"email@gmail.com","etet"); }
+                () -> { serviceUnderTest.createManager(VALID_NAME, NOT_VALID_PASSWORD,VALID_EMAIL,VALID_PHONE); }
         );
 
         assertEquals(Constants.PASSWORD_NOT_VALID,exception.getMessage());
@@ -231,14 +232,34 @@ public class UserServiceImplTest {
 
     @Test
     public void shouldThrowServiceExceptionWithMessagePhoneNotValidCreateManager(){
-        String invalidPhone = "3809655";
 
         ServiceException exception = assertThrows(
                 ServiceException.class,
-                () -> { serviceUnderTest.createManager("test", "Qwerty90@","email@gmail.com",invalidPhone); }
+                () -> { serviceUnderTest.createManager(VALID_NAME, VALID_PASSWORD,VALID_EMAIL,NOT_VALID_PHONE); }
         );
 
         assertEquals(Constants.PHONE_NOT_VALID,exception.getMessage());
     }
+
+    @Test
+    public void findAllManagers(){
+        List<User> users = userService.findAllManagers();
+        assertNotNull(users);
+    }
+
+    @Test
+    public void getNumberOfUsers(){
+        int users = userService.getNumberOfUsers();
+        assertTrue(users > 1);
+    }
+
+    @Test
+    public void changeBlockedStatus(){
+        Mockito.when(userDao.changeBlockedStatus(anyInt(), anyBoolean())).thenReturn(true);
+        boolean res = userService.changeBlockedStatus(ID, true);
+        assertTrue(res);
+    }
+
+
 
 }

@@ -13,8 +13,8 @@
 <jsp:include page="parts/_header.jsp"></jsp:include>
 
     <div class="text-center bg-light">
-        <button type="button" onclick="location.href='/sortByPrice'" class="btn btn-danger btn-sm">Sort by price</button>
-        <button type="button" onclick="location.href='/sortByName'" class="btn btn-danger btn-sm">Sort by name</button>
+        <button type="button" onclick="location.href='/sortByPrice'" class="btn btn-danger btn-sm"><fmt:message key="sortByPrice"/></button>
+        <button type="button" onclick="location.href='/sortByName'" class="btn btn-danger btn-sm"><fmt:message key="sortByName"/></button>
 </div>
 
 <div class="album py-5 bg-light">

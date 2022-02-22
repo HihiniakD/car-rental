@@ -63,7 +63,6 @@ public class AccessFilter implements Filter {
 
         logger.info(String.format("Initialized URL`s. %s: %s\n%s:%s\n%s:%s\n%s:%s",GUEST_URLS,guestUrls,
                 USER_URLS,userUrls,ADMIN_URLS,adminUrls,MANAGER_URLS,managerUrls));
-        System.out.println(adminUrls);
     }
 
     /**

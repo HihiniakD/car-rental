@@ -21,7 +21,7 @@ public class ConnectionPoolHolder {
 
     private ConnectionPoolHolder() { getDataSource(); }
 
-    public static synchronized ConnectionPoolHolder getInstance(){
+    public static ConnectionPoolHolder getInstance(){
         if(instance == null){
             synchronized (ConnectionPoolHolder.class){
                 if(instance == null){
@@ -43,7 +43,7 @@ public class ConnectionPoolHolder {
         if (dataSource == null) {
             synchronized (ConnectionPoolHolder.class) {
                 if (dataSource == null) {
-                    //configuring db connection pool with recommended params
+                    //configuring db connection pool with the following params
                     BasicDataSource basicDataSource = new BasicDataSource();
                     basicDataSource.setUrl("jdbc:mysql://localhost:3306/CarRental");
                     basicDataSource.setUsername("root");

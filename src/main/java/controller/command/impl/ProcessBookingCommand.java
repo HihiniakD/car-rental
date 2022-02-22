@@ -60,12 +60,9 @@ public class ProcessBookingCommand implements Command {
             return INDEX_VIEW;
         }
 
-        boolean isProcessed = false;
-        isProcessed = orderService.processOrder(user, car, pickUpDate, dropOffDate, totalPrice, withDriver);
-        if (isProcessed)
-            carService.changeStatus(car.getId(), Status.BUSY);
+        orderService.processOrder(user, car, pickUpDate, dropOffDate, totalPrice, withDriver);
+        carService.changeStatus(car.getId(), Status.BUSY);
         session.setAttribute(SUCCESS_MESSAGE_PARAMETER, SUCCESS_BOOKING_MESSAGE);
         return REDIRECT + MY_BOOKING_COMMAND;
     }
-
 }
