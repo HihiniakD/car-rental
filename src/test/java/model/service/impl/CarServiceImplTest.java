@@ -32,7 +32,7 @@ import static org.mockito.Mockito.when;
 
 public class CarServiceImplTest {
 
-    public static final int ID = 1;
+    public static final int ID = 15;
     public static final String MODEL = "Q7";
     public static final String VALID_PRICE = "70";
     public static final int VALID_PRICE_INT = 70;

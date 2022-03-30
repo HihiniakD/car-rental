@@ -52,11 +52,22 @@
                     <td>${car.price}$</td>
                     <td><fmt:message key="${car.transmission}"/></td>
                     <td><fmt:message key="${car.statusId}"/></td>
-                    <td>
-                                <a href="/editCar?id=<c:out value='${car.id}'/>"><fmt:message key="edit"/></a>
-                        &nbsp;&nbsp;&nbsp;
-                                <a href="/deleteCar?id=<c:out value='${car.id}'/>"><fmt:message key="delete"/></a>
-                    </td>
+                    <c:choose>
+                        <c:when test="${car.statusId=='BUSY'}">
+                        <td>
+                            <span class="text-secondary"><fmt:message key="edit"/></span>
+                            &nbsp;&nbsp;&nbsp;
+                            <span class="text-secondary"><fmt:message key="delete"/></span>
+                        </td>
+                    </c:when>
+                    <c:otherwise>
+                        <td>
+                            <a href="/editCar?id=<c:out value='${car.id}'/>"><fmt:message key="edit"/></a>
+                            &nbsp;&nbsp;&nbsp;
+                            <a href="/deleteCar?id=<c:out value='${car.id}'/>"><fmt:message key="delete"/></a>
+                        </td>
+                    </c:otherwise>
+                    </c:choose>
                 </tr>
             </c:forEach>
             </tbody>
