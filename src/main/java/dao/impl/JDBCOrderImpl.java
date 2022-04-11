@@ -79,32 +79,6 @@ public class JDBCOrderImpl implements OrderDao {
     }
 
     @Override
-    public boolean finishOrderAndSetStatusAndPrice(int id, String comment, int totalPrice, Status status) {
-        Connection connection = null;
-        try {
-            connection = ConnectionPoolHolder.getInstance().getConnection();
-        }catch (SQLException exception){
-            logger.error(SQL_GET_CONNECTION_ERROR);
-        }
-        try (PreparedStatement statement = connection.prepareStatement(SQL_SET_STATUS_AND_COMMENT_AND_PENALTY_BY_ID)){
-            statement.setInt(1, status.getStatus());
-            statement.setInt(2, totalPrice);
-            statement.setString(3, comment);
-            statement.setInt(4, id);
-            int count = statement.executeUpdate();
-            if(count >0)
-                return true;
-        } catch (SQLException exception) {
-            logger.error(SQL_QUERY_ERROR + exception.getMessage());
-            return false;
-        } finally {
-            close(connection);
-
-        }
-        return false;
-    }
-
-    @Override
     public boolean declineOrderAndSetComment(int id, String comment, Status status) {
         Connection connection = null;
         try {
@@ -140,10 +114,9 @@ public class JDBCOrderImpl implements OrderDao {
         Order order = null;
         try (PreparedStatement statement = connection.prepareStatement(SQL_GET_ORDER_BY_ID)){
             statement.setInt(1, orderId);
-            try (ResultSet rs = statement.executeQuery()) {
-                if(rs.next())
-                    order = OrderMapper.map(rs);
-            }
+            ResultSet rs = statement.executeQuery();
+            if(rs.next())
+                order = OrderMapper.map(rs);
         } catch (SQLException exception) {
             logger.error(SQL_QUERY_ERROR + exception.getMessage());
         } finally {
@@ -220,5 +193,50 @@ public class JDBCOrderImpl implements OrderDao {
             close(connection);
         }
         return orders;
+    }
+
+    @Override
+    public boolean finishOrderAndSetStatusAndPrice(int id, String comment, Status status, int penaltyFee) {
+        Connection connection = null;
+        Order order;
+        try {
+            connection = ConnectionPoolHolder.getInstance().getConnection();
+        } catch (SQLException exception) {
+            logger.error(SQL_GET_CONNECTION_ERROR);
+        }
+        try (PreparedStatement getStatement = connection.prepareStatement(SQL_GET_ORDER_BY_ID);
+             PreparedStatement updateStatement = connection.prepareStatement(SQL_SET_STATUS_AND_COMMENT_AND_PENALTY_BY_ID)) {
+            connection.setAutoCommit(false);
+            getStatement.setInt(1, id);
+            ResultSet rs = getStatement.executeQuery();
+            if (!rs.next()){
+            return false;
+            }
+            order = OrderMapper.map(rs);
+            int newPrice = order.getTotalPrice() + penaltyFee;
+            updateStatement.setInt(1, status.getStatus());
+            updateStatement.setInt(2, newPrice);
+            updateStatement.setString(3, comment);
+            updateStatement.setInt(4, id);
+            int count = updateStatement.executeUpdate();
+            if (count > 0)
+                return true;
+        } catch (SQLException exception) {
+            logger.error(SQL_QUERY_ERROR + exception.getMessage());
+            try {
+                connection.rollback();
+            } catch (SQLException e) {
+                logger.error(SQL_ROLLBACK_ERROR + e.getMessage());
+            }
+            return false;
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                logger.error(SQL_CHANGE_AUTO_COMMIT_ERROR + e.getMessage());
+            }
+            close(connection);
+        }
+        return false;
     }
 }

@@ -71,23 +71,9 @@ public class OrderServiceImplTest {
 
     @Test
     public void shouldReturnTrueWhenInputDataIsValidFinishOrder() {
-        Order testOrder = new Order();
-        testOrder.setId(ID);
-        testOrder.setUserId(ID);
-        testOrder.setCarId(ID);
-        testOrder.setTotalPrice(PRICE);
-        testOrder.setStatusId(Status.BUSY);
-        testOrder.setCityId(ID);
-        testOrder.setPickupDate(LocalDate.parse(PICK_UP_DATE));
-        testOrder.setDropoffDate(LocalDate.parse(DROP_OFF_DATE));
-        testOrder.setComment(null);
-        testOrder.setWithDriver(true);
-        Mockito.when(orderDao.findById(anyInt())).thenReturn(testOrder);
-        Mockito.when(orderDao.finishOrderAndSetStatusAndPrice(anyInt(), anyString(), anyInt(), anyObject())).thenReturn(true);
-
+        Mockito.when(orderDao.finishOrderAndSetStatusAndPrice(anyInt(), anyString(), anyObject(), anyInt())).thenReturn(true);
         boolean res = serviceUnderTest.finishOrder(ID, COMMENT, PENALTY);
-
-        Assert.assertTrue(res);
+        assertTrue(res);
     }
 
     @Test

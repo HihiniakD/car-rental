@@ -38,9 +38,7 @@ public class OrderServiceImpl implements OrderService {
     public boolean finishOrder(int id, String comment, String penalty) {
         validatePenaltyFee(penalty);
         int penaltyFee = Integer.parseInt(penalty);
-        Order order = orderDao.findById(id);
-        int newTotalPrice = order.getTotalPrice() + penaltyFee;
-        return orderDao.finishOrderAndSetStatusAndPrice(id, comment, newTotalPrice, Status.DONE);
+        return orderDao.finishOrderAndSetStatusAndPrice(id, comment, Status.DONE, penaltyFee);
     }
 
     @Override
@@ -120,7 +118,7 @@ public class OrderServiceImpl implements OrderService {
     /**
      * FinishBooking form validation
      */
-    public boolean validatePenaltyFee(String penaltyFee) {
+    public void validatePenaltyFee(String penaltyFee) {
         if (penaltyFee == null || penaltyFee.isBlank())
             throw new ServiceException(FAIL_MESSAGE);
 
@@ -129,6 +127,5 @@ public class OrderServiceImpl implements OrderService {
         }catch (NumberFormatException exception){
             throw new ServiceException(FAIL_MESSAGE);
         }
-        return true;
     }
 }

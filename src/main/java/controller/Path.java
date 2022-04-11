@@ -17,7 +17,6 @@ public class Path {
     public static final String MY_BOOKING_PATH = "/my_booking";
     public static final String MANAGER_PAGE_PATH = "/manager_page";
     public static final String ADMIN_PAGE_PATH = "/admin_page";
-    public static final String DECLINE_ORDER_PATH = "/declineBooking";
 
     //views
     public static final String NOT_FOUND_VIEW = "/WEB-INF/views/error.jsp";

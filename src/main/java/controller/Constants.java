@@ -88,6 +88,8 @@ public class Constants {
     public static final String SQL_GET_CONNECTION_ERROR = "Exception thrown while getting connection";
     public static final String SQL_CLOSE_CONNECTION_ERROR = "Exception thrown while closing connection";
     public static final String SQL_QUERY_ERROR = "Exception thrown while querying ";
+    public static final String SQL_ROLLBACK_ERROR = "Exception thrown while rollback ";
+    public static final String SQL_CHANGE_AUTO_COMMIT_ERROR = "Exception thrown while changing auto commit to true value ";
     public static final String DB_CLASS_NOT_FOUND_ERROR = "ClassNot Found exception thrown";
     public static final String DB_ACCESS_ERROR = "Can`t access data base";
 }
